@@ -5,6 +5,184 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/assets": {
+            "get": {
+                "tags": [
+                    "Assets"
+                ],
+                "summary": "Lists assets",
+                "operationId": "listAssets",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Assets"
+                ],
+                "summary": "Adds a new asset",
+                "operationId": "storeAsset",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssetStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/assets/{id}": {
+            "get": {
+                "tags": [
+                    "Assets"
+                ],
+                "summary": "Get Asset information",
+                "description": "Returns Asset data",
+                "operationId": "showAsset",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Asset id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Assets"
+                ],
+                "summary": "Update Asset information",
+                "description": "Returns updated Asset data",
+                "operationId": "updateAsset",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Asset id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssetStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Assets"
+                ],
+                "summary": "Delete Asset",
+                "description": "Deletes a single Asset",
+                "operationId": "deleteAsset",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Asset id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssetResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/companies": {
             "get": {
                 "tags": [
@@ -409,7 +587,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserResource"
                                 }
                             }
                         }
@@ -425,6 +603,45 @@
     },
     "components": {
         "schemas": {
+            "Asset": {
+                "title": "Asset",
+                "description": "Asset model",
+                "type": "object",
+                "xml": {
+                    "name": "Asset"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BaseModel"
+                    },
+                    {
+                        "properties": {
+                            "fqdn": {
+                                "title": "fqdn",
+                                "description": "FQDN of the asset",
+                                "type": "string",
+                                "format": "string",
+                                "example": "example.com"
+                            },
+                            "unique_id": {
+                                "title": "unique_id",
+                                "description": "The unique id of the Asset",
+                                "type": "string",
+                                "format": "string",
+                                "example": "1"
+                            },
+                            "operating_system": {
+                                "title": "operating_system",
+                                "description": "The operating system of the Asset",
+                                "type": "string",
+                                "format": "string",
+                                "example": "Windows"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "BaseModel": {
                 "title": "BaseModel",
                 "description": "BaseModel",
@@ -475,6 +692,9 @@
                                 "type": "integer",
                                 "format": "int64",
                                 "example": 1
+                            },
+                            "tenant": {
+                                "$ref": "#/components/schemas/Tenant"
                             }
                         },
                         "type": "object"
@@ -496,7 +716,7 @@
                         "properties": {
                             "name": {
                                 "title": "Name",
-                                "description": "Name of the User",
+                                "description": "Name of the entity",
                                 "type": "string",
                                 "example": "Elmofuchto"
                             }
@@ -526,7 +746,7 @@
                 },
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/BaseModel"
+                        "$ref": "#/components/schemas/NamedBaseModel"
                     },
                     {
                         "properties": {
@@ -536,11 +756,62 @@
                                 "type": "string",
                                 "format": "datetime",
                                 "example": "2020-01-27 17:50:45"
+                            },
+                            "company": {
+                                "$ref": "#/components/schemas/Company"
                             }
                         },
                         "type": "object"
                     }
                 ]
+            },
+            "AssetStoreRequest": {
+                "title": "AssetStoreRequest",
+                "properties": {
+                    "fqdn": {
+                        "title": "fqdn",
+                        "description": "FQDN of the new Asset",
+                        "type": "string",
+                        "example": "example.com"
+                    },
+                    "unique_id": {
+                        "title": "unique_id",
+                        "description": "The unique id of the Asset",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "operating_system": {
+                        "title": "operating_system",
+                        "description": "The operating system of the Asset",
+                        "type": "string",
+                        "example": "Windows"
+                    }
+                },
+                "type": "object"
+            },
+            "AssetUpdateRequest": {
+                "title": "AssetUpdateRequest",
+                "properties": {
+                    "fqdn": {
+                        "title": "fqdn",
+                        "description": "FQDN of the new Asset",
+                        "type": "string",
+                        "example": "example.com"
+                    },
+                    "unique_id": {
+                        "title": "unique_id",
+                        "description": "The unique id of the Asset",
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "operating_system": {
+                        "title": "operating_system",
+                        "description": "The operating system of the Asset",
+                        "type": "string",
+                        "example": "Windows"
+                    }
+                },
+                "type": "object"
             },
             "CompanyStoreRequest": {
                 "title": "CompanyStoreRequest",
@@ -614,6 +885,24 @@
                 },
                 "type": "object"
             },
+            "AssetResource": {
+                "title": "AssetResource",
+                "description": "AssetResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Asset"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AssetResource"
+                }
+            },
             "CompanyResource": {
                 "title": "CompanyResource",
                 "description": "CompanyResource",
@@ -649,12 +938,30 @@
                 "xml": {
                     "name": "TenantResource"
                 }
+            },
+            "UserResource": {
+                "title": "UserResource",
+                "description": "UserResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserResource"
+                }
             }
         },
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",
-                "description": "Enter token in format (Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185)",
+                "description": "Enter token in format Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185",
                 "name": "Authorization",
                 "in": "header"
             }

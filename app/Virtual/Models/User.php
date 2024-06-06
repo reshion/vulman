@@ -13,7 +13,7 @@ use OpenApi\Annotations as OA;
  *     )
  * )
  */
-class User extends BaseModel
+class User extends NamedBaseModel
 {   
 
     /**
@@ -28,5 +28,15 @@ class User extends BaseModel
      * @var \DateTime
      */
     private $email_verified_at;
+
+    /**
+     * @OA\Property(
+     *     title="Company",
+     *     description="Company model"
+     * )
+     *
+     * @var \App\Virtual\Models\Company
+     */
+    private $company;
 
 }

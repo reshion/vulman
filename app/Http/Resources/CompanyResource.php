@@ -20,7 +20,7 @@ class CompanyResource extends JsonResource
             'tenant_id' => $this->tenant_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            // 'tenant' => new TenantResource($this->whenLoaded('tenant')),
+            'tenant' => new TenantResource($this->whenLoaded('tenant')),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use OpenApi\Annotations as OA;
@@ -63,13 +64,13 @@ class UserController extends Controller
      *    @OA\Response(
      *      response=200,
      *      description="OK",
-     *      @OA\JsonContent(ref="#/components/schemas/User")
+     *      @OA\JsonContent(ref="#/components/schemas/UserResource")
      *    )
      * )
      * 
      */
     public function current(Request $request)
     {
-        return $request->user();
+        return new UserResource($request->user()->load('company.tenant'));
     }   
 }

@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Virtual\Models;
-
-use Faker\Guesser\Name;
 use OpenApi\Annotations as OA;
 
 /**
@@ -29,13 +27,13 @@ class Company extends NamedBaseModel
      */
     public $tenant_id;
 
-    // /**
-    //  * @OA\Property(
-    //  *     title="Tenant",
-    //  *     description="Company tenants model"
-    //  * )
-    //  *
-    //  * @var \App\Virtual\Models\Tenant
-    //  */
-    // private $tenant;
+    /**
+     * @OA\Property(
+     *     title="Tenant",
+     *     description="Company tenants model"
+     * )
+     *
+     * @var \App\Virtual\Models\Tenant
+     */
+    private $tenant;
 }

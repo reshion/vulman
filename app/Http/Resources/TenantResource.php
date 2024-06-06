@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+
 class TenantResource extends JsonResource
 {
     /**
@@ -20,4 +21,6 @@ class TenantResource extends JsonResource
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];
     }
+
+   
 }

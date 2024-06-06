@@ -18,7 +18,7 @@ class NamedBaseModel extends BaseModel
     /**
      * @OA\Property(
      *      title="Name",
-     *      description="Name of the User",
+     *      description="Name of the entity",
      *      example="Elmofuchto"
      * )
      *

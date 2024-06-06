@@ -1,0 +1,21 @@
+Regenerating docs default
+
+   ErrorException 
+
+  Skipping unknown App\Virtual\Resources\AssetResource
+
+  at vendor/zircote/swagger-php/src/Loggers/DefaultLogger.php:31
+     27▕         } else {
+     28▕             $error_level = E_USER_WARNING;
+     29▕         }
+     30▕ 
+  ➜  31▕         trigger_error($message, $error_level);
+     32▕     }
+     33▕ }
+     34▕
+
+      [2m+23 vendor frames [22m
+
+  24  artisan:13
+      Illuminate\Foundation\Application::handleCommand()
+

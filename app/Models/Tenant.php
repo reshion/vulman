@@ -9,6 +9,6 @@ class Tenant extends Model
 {
     use HasFactory;
     protected $table = 'tenants';
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['name'];
   
 }
