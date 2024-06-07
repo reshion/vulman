@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Http\Request;
@@ -22,4 +23,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('companies', CompanyController::class);
     // Asset Routes
     Route::apiResource('assets', AssetController::class);
+    // Assessment Routes
+    Route::apiResource('assessments', AssessmentController::class);
+
 });

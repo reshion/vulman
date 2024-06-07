@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('created');
-            $table->enum('lifecycle_status', ['open', 'closed']);
+            $table->enum('lifecycle_status', ['OPEN', 'CLOSED']);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

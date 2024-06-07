@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Assessment::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->date('created');
-            $table->enum('lifecycle_status', ['open', 'in_progress', 'closed']);
+            $table->enum('lifecycle_status', ['OPEN', 'IN_PROGRESS', 'CLOSED']);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

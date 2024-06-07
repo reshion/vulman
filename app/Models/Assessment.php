@@ -12,7 +12,8 @@ class Assessment extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'created'
+        'created',
+        'lifecycle_status'
     ];
 
     protected function lifecycle_status(): Attribute
