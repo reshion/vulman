@@ -28,19 +28,32 @@ class TenantController extends Controller
      *     summary="Lists tenants",
      *     tags={"Tenants"},
      *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/TenantResource")
+     *         @OA\JsonContent(ref="#/components/schemas/TenantPagingResource")
      *     )
      * )
      */
     public function index(Request $request)
     {
-        //       
-        $tenants = Tenant::all();
-        $test = TenantResource::collection($tenants);
-        return $test;
+        $count = $request->input('count', 10);
+        $tenants = Tenant::paginate($count);
+        return TenantResource::collection($tenants);
     }
 
     /**

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TenantController;
-
+use App\Http\Controllers\VulnerabilityController;
 
 Route::post('/user/login', [UserController::class, 'login']);
 
@@ -28,5 +28,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('assessments', AssessmentController::class);
     // Risk Response Routes
     Route::apiResource('risk-responses', RiskResponseController::class);
+    // Vulnerability Routes
+    Route::apiResource('vulnerabilities', VulnerabilityController::class);
 
 });

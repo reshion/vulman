@@ -7,6 +7,7 @@ use App\Http\Requests\CompanyStoreRequest;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use Illuminate\Http\Request;
 
 /** 
  * @OAS\SecurityScheme(      
@@ -25,16 +26,32 @@ class CompanyController extends Controller
      *     summary="Lists companies",
      *     tags={"Companies"},
      *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/CompanyResource")
+     *         @OA\JsonContent(ref="#/components/schemas/CompanyPagingResource")
      *     )
      * )
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CompanyResource::collection(Company::with('tenant')->get());
+        $count = $request->input('count', 10);
+        $companies = Company::with('tenant')->paginate($count);
+        return CompanyResource::collection($companies);
     }
 
     /**

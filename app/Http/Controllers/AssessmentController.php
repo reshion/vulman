@@ -24,19 +24,32 @@ class AssessmentController extends Controller
      *     summary="Lists assessments",
      *     tags={"Assessments"},
      *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/AssessmentResource")
+     *         @OA\JsonContent(ref="#/components/schemas/AssessmentPagingResource")
      *     )
      * )
      */
     public function index(Request $request)
     {
-        //       
-        $assessments = Assessment::all();
-        $test = AssessmentResource::collection($assessments);
-        return $test;
+        $count = $request->input('count', 10);
+        $assessments = Assessment::paginate($count);
+        return AssessmentResource::collection($assessments);
     }
 
     /**

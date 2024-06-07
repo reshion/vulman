@@ -24,19 +24,32 @@ class AssetController extends Controller
      *     summary="Lists assets",
      *     tags={"Assets"},
      *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/AssetResource")
+     *         @OA\JsonContent(ref="#/components/schemas/AssetPagingResource")
      *     )
      * )
      */
     public function index(Request $request)
     {
-        //       
-        $assets = Asset::all();
-        $test = AssetResource::collection($assets);
-        return $test;
+        $count = $request->input('count', 10);
+        $assets = Asset::paginate($count);
+        return AssetResource::collection($assets);
     }
 
     /**

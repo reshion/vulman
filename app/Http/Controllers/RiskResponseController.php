@@ -8,6 +8,13 @@ use App\Http\Resources\RiskResponseResource;
 use App\Models\RiskResponse;
 use Illuminate\Http\Request;
 
+/** 
+ * @OAS\SecurityScheme(      
+ *      securityScheme="sanctum",
+ *      type="http",
+ *      scheme="bearer"
+ * )
+ */
 class RiskResponseController extends Controller
 {
      /**
@@ -17,19 +24,32 @@ class RiskResponseController extends Controller
      *     summary="Lists risk-responses",
      *     tags={"RiskResponses"},
      *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/RiskResponseResource")
+     *         @OA\JsonContent(ref="#/components/schemas/RiskResponsePagingResource")
      *     )
      * )
      */
     public function index(Request $request)
     {
-        //       
-        $riskResponses = RiskResponse::all();
-        $test = RiskResponseResource::collection($riskResponses);
-        return $test;
+        $count = $request->input('count', 10);
+        $riskResponses = RiskResponse::paginate($count);
+        return RiskResponseResource::collection($riskResponses);
     }
 
     /**

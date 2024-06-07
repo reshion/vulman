@@ -12,13 +12,35 @@
                 ],
                 "summary": "Lists assessments",
                 "operationId": "listAssessments",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/AssessmentResource"
+                                    "$ref": "#/components/schemas/AssessmentPagingResource"
                                 }
                             }
                         }
@@ -190,13 +212,35 @@
                 ],
                 "summary": "Lists assets",
                 "operationId": "listAssets",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/AssetResource"
+                                    "$ref": "#/components/schemas/AssetPagingResource"
                                 }
                             }
                         }
@@ -368,13 +412,35 @@
                 ],
                 "summary": "Lists companies",
                 "operationId": "listCompanies",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CompanyResource"
+                                    "$ref": "#/components/schemas/CompanyPagingResource"
                                 }
                             }
                         }
@@ -546,13 +612,35 @@
                 ],
                 "summary": "Lists risk-responses",
                 "operationId": "listRiskResponses",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/RiskResponseResource"
+                                    "$ref": "#/components/schemas/RiskResponsePagingResource"
                                 }
                             }
                         }
@@ -724,13 +812,35 @@
                 ],
                 "summary": "Lists tenants",
                 "operationId": "listTenants",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TenantResource"
+                                    "$ref": "#/components/schemas/TenantPagingResource"
                                 }
                             }
                         }
@@ -944,6 +1054,206 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/vulnerabilities": {
+            "get": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Lists vulnerabilities",
+                "operationId": "listVulnerabilities",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VulnerabilityPagingResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Adds a new vulnerability",
+                "operationId": "storeVulnerability",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VulnerabilityStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VulnerabilityResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/vulnerabilities/{id}": {
+            "get": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Get Vulnerability information",
+                "description": "Returns Vulnerability data",
+                "operationId": "showVulnerability",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vulnerability id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VulnerabilityResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Update Vulnerability information",
+                "description": "Returns updated Vulnerability data",
+                "operationId": "updateVulnerability",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vulnerability id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VulnerabilityStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VulnerabilityResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Delete Vulnerability",
+                "description": "Deletes a single Vulnerability",
+                "operationId": "deleteVulnerability",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Vulnerability id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VulnerabilityResource"
                                 }
                             }
                         }
@@ -1202,6 +1512,38 @@
                     }
                 ]
             },
+            "Vulnerability": {
+                "title": "Vulnerability",
+                "description": "Vulnerability model",
+                "type": "object",
+                "xml": {
+                    "name": "Vulnerability"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BaseModel"
+                    },
+                    {
+                        "properties": {
+                            "cve_id": {
+                                "title": "cve_id",
+                                "description": "CVE ID of the vulnerability",
+                                "type": "string",
+                                "format": "string",
+                                "example": "CVE-2021-1234"
+                            },
+                            "cve_details": {
+                                "title": "cve_details",
+                                "description": "Details of the vulnerability",
+                                "type": "string",
+                                "format": "json",
+                                "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "AssessmentStoreRequest": {
                 "title": "AssessmentStoreRequest",
                 "properties": {
@@ -1416,6 +1758,59 @@
                 },
                 "type": "object"
             },
+            "VulnerabilityStoreRequest": {
+                "title": "VulnerabilityStoreRequest",
+                "properties": {
+                    "cve_id": {
+                        "title": "cve_id",
+                        "description": "ID of the new Vulnerability",
+                        "type": "string",
+                        "example": "CVE-2021-1234"
+                    },
+                    "cve_details": {
+                        "title": "cve_details",
+                        "description": "Details of the new Vulnerability",
+                        "type": "string",
+                        "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+                    }
+                },
+                "type": "object"
+            },
+            "VulnerabilityUpdateRequest": {
+                "title": "VulnerabilityUpdateRequest",
+                "properties": {
+                    "cve_id": {
+                        "title": "cve_id",
+                        "description": "ID of the new Vulnerability",
+                        "type": "string",
+                        "example": "CVE-2021-1234"
+                    },
+                    "cve_details": {
+                        "title": "cve_details",
+                        "description": "Details of the new Vulnerability",
+                        "type": "string",
+                        "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+                    }
+                },
+                "type": "object"
+            },
+            "AssessmentPagingResource": {
+                "title": "AssessmentPagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Assessment"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object"
+            },
             "AssessmentResource": {
                 "title": "AssessmentResource",
                 "properties": {
@@ -1429,6 +1824,27 @@
                     }
                 },
                 "type": "object"
+            },
+            "AssetPagingResource": {
+                "title": "AssetPagingResource",
+                "description": "AssetPagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Asset"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AssetPagingResource"
+                }
             },
             "AssetResource": {
                 "title": "AssetResource",
@@ -1446,6 +1862,27 @@
                 "type": "object",
                 "xml": {
                     "name": "AssetResource"
+                }
+            },
+            "CompanyPagingResource": {
+                "title": "CompanyPagingResource",
+                "description": "CompanyPagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Company"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CompanyPagingResource"
                 }
             },
             "CompanyResource": {
@@ -1466,6 +1903,59 @@
                     "name": "CompanyResource"
                 }
             },
+            "Meta": {
+                "title": "Meta",
+                "properties": {
+                    "current_page": {
+                        "title": "Current Page",
+                        "description": "Current Page of the data",
+                        "type": "integer"
+                    },
+                    "from": {
+                        "title": "From",
+                        "description": "From",
+                        "type": "integer"
+                    },
+                    "last_page": {
+                        "title": "Last Page",
+                        "description": "Last Page of the data",
+                        "type": "integer"
+                    },
+                    "per_page": {
+                        "title": "Per Page",
+                        "description": "Per Page of the data",
+                        "type": "integer"
+                    },
+                    "to": {
+                        "title": "To",
+                        "description": "To",
+                        "type": "integer"
+                    },
+                    "total": {
+                        "title": "Total",
+                        "description": "Total",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "RiskResponsePagingResource": {
+                "title": "RiskResponsePagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RiskResponse"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object"
+            },
             "RiskResponseResource": {
                 "title": "RiskResponseResource",
                 "properties": {
@@ -1479,6 +1969,27 @@
                     }
                 },
                 "type": "object"
+            },
+            "TenantPagingResource": {
+                "title": "TenantPagingResource",
+                "description": "TenantPagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Tenant"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TenantPagingResource"
+                }
             },
             "TenantResource": {
                 "title": "TenantResource",
@@ -1515,6 +2026,37 @@
                 "xml": {
                     "name": "UserResource"
                 }
+            },
+            "VulnerabilityPagingResource": {
+                "title": "VulnerabilityPagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Vulnerability"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object"
+            },
+            "VulnerabilityResource": {
+                "title": "VulnerabilityResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Vulnerability"
+                        }
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
