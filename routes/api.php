@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\RiskResponseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -25,5 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('assets', AssetController::class);
     // Assessment Routes
     Route::apiResource('assessments', AssessmentController::class);
+    // Risk Response Routes
+    Route::apiResource('risk-responses', RiskResponseController::class);
 
 });

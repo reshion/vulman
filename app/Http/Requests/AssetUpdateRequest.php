@@ -22,9 +22,9 @@ class AssetUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fqdn' => 'required|string|max:255',
-            'unique_id' => 'required|string',
-            'operating_system' => 'required|string|max:255',
+            'fqdn' => 'sometimes|required|string|max:255',
+            'unique_id' => 'sometimes|required|string',
+            'operating_system' => 'sometimes|required|string|max:255',
         ];
     }
 }

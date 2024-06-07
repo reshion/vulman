@@ -30,18 +30,6 @@ class Assessment extends NamedBaseModel
     public $created;
 
     #[OAT\Property()]
-    public AssessmentLifecycleStatus $lifecycle_status;
-
-    /**
-     * @OA\Property(
-     *      title="operating_system",
-     *      description="Operating system of the Assessment",
-     *      format="string",
-     *      example="Windows 10",
-     * )
-     *
-     * @var string
-     */
-    public $operating_system;
+    public AssessmentLifecycleStatus $lifecycle_status;    
     
 }

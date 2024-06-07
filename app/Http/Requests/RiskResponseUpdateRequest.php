@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\AssessmentLifecycleStatus;
+use App\Enums\RiskResponseLifecycleStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AssessmentUpdateRequest extends FormRequest
+class RiskResponseUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class AssessmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'assmessment_id' => 'sometimes|required|integer',
             'name' => 'sometimes|string|max:255',
             'created' => 'sometimes|required|date',
-            'lifecycle_status' => ['sometimes','required', Rule::enum(AssessmentLifecycleStatus::class)],
+            'lifecycle_status' => ['sometimes', 'required', Rule::enum(RiskResponseLifecycleStatus::class)],
         ];
     }
 }
