@@ -5,6 +5,184 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/assessments": {
+            "get": {
+                "tags": [
+                    "Assessments"
+                ],
+                "summary": "Lists assessments",
+                "operationId": "listAssessments",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssessmentResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Assessments"
+                ],
+                "summary": "Adds a new assessment",
+                "operationId": "storeAssessment",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssessmentStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssessmentResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/assessments/{id}": {
+            "get": {
+                "tags": [
+                    "Assessments"
+                ],
+                "summary": "Get Assessment information",
+                "description": "Returns Assessment data",
+                "operationId": "showAssessment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Assessment id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssessmentResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Assessments"
+                ],
+                "summary": "Update Assessment information",
+                "description": "Returns updated Assessment data",
+                "operationId": "updateAssessment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Assessment id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AssessmentStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssessmentResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Assessments"
+                ],
+                "summary": "Delete Assessment",
+                "description": "Deletes a single Assessment",
+                "operationId": "deleteAssessment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Assessment id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AssessmentResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/assets": {
             "get": {
                 "tags": [
@@ -603,6 +781,48 @@
     },
     "components": {
         "schemas": {
+            "AssessmentLifecycleStatus": {
+                "type": "string",
+                "enum": [
+                    "OPEN",
+                    "CLOSED"
+                ]
+            },
+            "Assessment": {
+                "title": "Assessment",
+                "description": "Assessment model",
+                "type": "object",
+                "xml": {
+                    "name": "Assessment"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/NamedBaseModel"
+                    },
+                    {
+                        "properties": {
+                            "created": {
+                                "title": "created",
+                                "description": "Created date of the Assessment",
+                                "type": "string",
+                                "format": "date",
+                                "example": "2020-01-27 17:50:45"
+                            },
+                            "lifecycle_status": {
+                                "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+                            },
+                            "operating_system": {
+                                "title": "operating_system",
+                                "description": "Operating system of the Assessment",
+                                "type": "string",
+                                "format": "string",
+                                "example": "Windows 10"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "Asset": {
                 "title": "Asset",
                 "description": "Asset model",
@@ -765,6 +985,50 @@
                     }
                 ]
             },
+            "AssessmentStoreRequest": {
+                "title": "AssessmentStoreRequest",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new Assessment",
+                        "type": "string",
+                        "example": "Approve"
+                    },
+                    "created": {
+                        "title": "created",
+                        "description": "The date the Assessment was created",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-10-10"
+                    },
+                    "lifecycle_status": {
+                        "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+                    }
+                },
+                "type": "object"
+            },
+            "AssessmentUpdateRequest": {
+                "title": "AssessmentUpdateRequest",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new Assessment",
+                        "type": "string",
+                        "example": "Approve"
+                    },
+                    "created": {
+                        "title": "created",
+                        "description": "The date the Assessment was created",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2021-10-10"
+                    },
+                    "lifecycle_status": {
+                        "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+                    }
+                },
+                "type": "object"
+            },
             "AssetStoreRequest": {
                 "title": "AssetStoreRequest",
                 "properties": {
@@ -881,6 +1145,20 @@
                         "description": "Update name of the new Tenant",
                         "type": "string",
                         "example": "A nice Tenant"
+                    }
+                },
+                "type": "object"
+            },
+            "AssessmentResource": {
+                "title": "AssessmentResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Assessment"
+                        }
                     }
                 },
                 "type": "object"
