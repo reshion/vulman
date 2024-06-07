@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Virtual\Resources;
+
 use OpenApi\Annotations as OA;
 use OpenApi\Attributes as OAT;
 
@@ -19,7 +20,7 @@ class RiskResponseResource
      *     description="Data wrapper"
      * )
      *
-     * @var \App\Virtual\Models\RiskResponse[]
+     * @var \App\Virtual\Models\RiskResponse
      */
     private $data;
 }

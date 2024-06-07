@@ -14,15 +14,15 @@ use OpenApi\Annotations as OA;
  * )
  */
 
- class TenantResource
- {
-   /**
-     * @OA\Property(
-     *     title="Data",
-     *     description="Data wrapper"
-     * )
-     *
-     * @var \App\Virtual\Models\Tenant[]
-     */
-    private $data;
- }
+class TenantResource
+{
+  /**
+   * @OA\Property(
+   *     title="Data",
+   *     description="Data wrapper"
+   * )
+   *
+   * @var \App\Virtual\Models\Tenant
+   */
+  private $data;
+}

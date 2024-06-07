@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Virtual\Resources;
+
 use OpenApi\Annotations as OA;
-use OpenApi\Attributes as OAT;
 
 /**
  * @OA\Schema(
@@ -19,7 +19,7 @@ class AssessmentResource
      *     description="Data wrapper"
      * )
      *
-     * @var \App\Virtual\Models\Assessment[]
+     * @var \App\Virtual\Models\Assessment
      */
     private $data;
 }

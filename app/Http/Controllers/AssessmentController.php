@@ -7,7 +7,9 @@ use App\Http\Requests\AssessmentUpdateRequest;
 use App\Http\Resources\AssessmentResource;
 use App\Models\Assessment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use OpenApi\Annotations as OA;
+
 /** 
  * @OAS\SecurityScheme(      
  *      securityScheme="sanctum",
@@ -17,7 +19,7 @@ use OpenApi\Annotations as OA;
  */
 class AssessmentController extends Controller
 {
-     /**
+    /**
      * @OA\Get(
      *     path="/api/assessments",
      *     operationId="listAssessments",
@@ -47,6 +49,7 @@ class AssessmentController extends Controller
      */
     public function index(Request $request)
     {
+        Storage::disk('public')->put('example.txt', 'Contents');
         $count = $request->input('count', 10);
         $assessments = Assessment::paginate($count);
         return AssessmentResource::collection($assessments);
@@ -77,7 +80,7 @@ class AssessmentController extends Controller
     public function store(AssessmentStoreRequest $request)
     {
         $assessment = Assessment::create($request->all());
-        return new AssessmentResource($assessment);             
+        return new AssessmentResource($assessment);
     }
 
     /**
@@ -108,7 +111,7 @@ class AssessmentController extends Controller
     {
         return new AssessmentResource($assessment);
     }
-    
+
 
     /**
      * @OA\Put(

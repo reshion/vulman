@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Virtual\Resources;
 
 use OpenApi\Annotations as OA;
@@ -13,15 +14,15 @@ use OpenApi\Annotations as OA;
  * )
  */
 
- class AssetResource
- {
-   /**
-     * @OA\Property(
-     *     title="Data",
-     *     description="Data wrapper"
-     * )
-     *
-     * @var \App\Virtual\Models\Asset[]
-     */
-    private $data;
- }
+class AssetResource
+{
+  /**
+   * @OA\Property(
+   *     title="Data",
+   *     description="Data wrapper"
+   * )
+   *
+   * @var \App\Virtual\Models\Asset
+   */
+  private $data;
+}
