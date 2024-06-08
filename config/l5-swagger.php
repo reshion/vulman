@@ -195,7 +195,7 @@ return [
                 */
                 'sanctum' => [ // Unique name of security
                     'type' => 'apiKey', // Valid values are "basic", "apiKey" or "oauth2".
-                    'description' => 'Enter token in format Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185',
+                    'description' => 'Enter token in format Bearer 4|HJEh2uoqdia9oAtKeHUIXcw08coNcxxqTFBvAmkBa304c6df',
                     'name' => 'Authorization', // The name of the header or query parameter to be used.
                     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
                 ],
@@ -212,9 +212,7 @@ return [
                     ],
 
                     'passport' => []
-                    */
-                    
-                ],
+                    */],
             ],
         ],
 

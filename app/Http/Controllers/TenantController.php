@@ -81,7 +81,7 @@ class TenantController extends Controller
     public function store(TenantStoreRequest $request)
     {
         $tenant = Tenant::create($request->all());
-        return new TenantResource($tenant);             
+        return new TenantResource($tenant);
     }
 
     /**
@@ -110,9 +110,9 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
-        return new TenantResource($tenant);
+        return new TenantResource($tenant->load('companies'));
     }
-    
+
 
     /**
      * @OA\Put(

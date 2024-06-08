@@ -1288,9 +1288,6 @@
                 "title": "Assessment",
                 "description": "Assessment model",
                 "type": "object",
-                "xml": {
-                    "name": "Assessment"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NamedBaseModel"
@@ -1302,7 +1299,7 @@
                                 "description": "Created date of the Assessment",
                                 "type": "string",
                                 "format": "date",
-                                "example": "2020-01-27 17:50:45"
+                                "example": "2020-01-27"
                             },
                             "lifecycle_status": {
                                 "$ref": "#/components/schemas/AssessmentLifecycleStatus"
@@ -1316,9 +1313,6 @@
                 "title": "Asset",
                 "description": "Asset model",
                 "type": "object",
-                "xml": {
-                    "name": "Asset"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/BaseModel"
@@ -1337,7 +1331,7 @@
                                 "description": "The unique id of the Asset",
                                 "type": "string",
                                 "format": "string",
-                                "example": "1"
+                                "example": "test123"
                             },
                             "operating_system": {
                                 "title": "operating_system",
@@ -1353,11 +1347,11 @@
             },
             "BaseModel": {
                 "title": "BaseModel",
-                "description": "BaseModel",
+                "description": "Base Model",
                 "properties": {
                     "id": {
-                        "title": "ID",
-                        "description": "ID",
+                        "title": "Id",
+                        "description": "Id",
                         "type": "integer",
                         "format": "int64",
                         "example": 1
@@ -1377,18 +1371,12 @@
                         "example": "2020-01-27 17:50:45"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "BaseModel"
-                }
+                "type": "object"
             },
             "Company": {
                 "title": "Company",
                 "description": "Company model",
                 "type": "object",
-                "xml": {
-                    "name": "Company"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NamedBaseModel"
@@ -1414,9 +1402,6 @@
                 "title": "NamedBaseModel",
                 "description": "NamedBaseModel",
                 "type": "object",
-                "xml": {
-                    "name": "NamedBaseModel"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/BaseModel"
@@ -1438,9 +1423,6 @@
                 "title": "RiskResponse",
                 "description": "RiskResponse model",
                 "type": "object",
-                "xml": {
-                    "name": "RiskResponse"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NamedBaseModel"
@@ -1452,7 +1434,7 @@
                                 "description": "Created date of the RiskResponse",
                                 "type": "string",
                                 "format": "date",
-                                "example": "2020-01-27 17:50:45"
+                                "example": "2020-01-27"
                             },
                             "lifecycle_status": {
                                 "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
@@ -1475,9 +1457,6 @@
             "Tenant": {
                 "title": "Tenant",
                 "description": "Tenant model",
-                "xml": {
-                    "name": "Tenant"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NamedBaseModel"
@@ -1488,9 +1467,6 @@
                 "title": "User",
                 "description": "User model",
                 "type": "object",
-                "xml": {
-                    "name": "User"
-                },
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/NamedBaseModel"
@@ -2027,7 +2003,7 @@
         "securitySchemes": {
             "sanctum": {
                 "type": "apiKey",
-                "description": "Enter token in format Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185",
+                "description": "Enter token in format Bearer 4|HJEh2uoqdia9oAtKeHUIXcw08coNcxxqTFBvAmkBa304c6df",
                 "name": "Authorization",
                 "in": "header"
             }

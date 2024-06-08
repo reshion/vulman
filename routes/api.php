@@ -25,10 +25,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Asset Routes
     Route::apiResource('assets', AssetController::class);
     // Assessment Routes
-    Route::apiResource('assessments', AssessmentController::class);
+    Route::apiResource('assessments', AssessmentController::class)->withoutMiddleware(['auth:sanctum']);
     // Risk Response Routes
     Route::apiResource('risk-responses', RiskResponseController::class);
     // Vulnerability Routes
     Route::apiResource('vulnerabilities', VulnerabilityController::class);
-
 });

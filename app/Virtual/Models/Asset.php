@@ -7,14 +7,11 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Schema(
  *     title="Asset",
- *     description="Asset model",
- *     @OA\Xml(
- *         name="Asset"
- *     )
+ *     description="Asset model"
  * )
  */
 class Asset extends BaseModel
-{   
+{
 
     /**
      * @OA\Property(
@@ -33,7 +30,7 @@ class Asset extends BaseModel
      *      title="unique_id",
      *      description="The unique id of the Asset",
      *      format="string",
-     *      example="1"
+     *      example="test123"
      * )
      *
      * @var string
@@ -51,5 +48,4 @@ class Asset extends BaseModel
      * @var string
      */
     public $operating_system;
-    
 }

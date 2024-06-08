@@ -107,7 +107,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        return new CompanyResource($company->load('tenant'));
+        return new CompanyResource($company->load('tenant.company'));
     }
 
     /**

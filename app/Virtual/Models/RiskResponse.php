@@ -4,32 +4,31 @@ namespace App\Virtual\Models;
 
 use App\Enums\RiskResponseLifecycleStatus;
 use OpenApi\Annotations as OA;
-use OpenApi\Attributes as OAT;
+
 /**
  * @OA\Schema(
  *     title="RiskResponse",
  *     description="RiskResponse model",
- *     @OA\Xml(
- *         name="RiskResponse"
- *     )
  * )
  */
 class RiskResponse extends NamedBaseModel
-{   
+{
 
     /**
      * @OA\Property(
      *      title="created",
      *      description="Created date of the RiskResponse",
      *      format="date",
-     *      example="2020-01-27 17:50:45",
+     *      example="2020-01-27",
      * )
      *
      * @var date
      */
     public $created;
 
-    #[OAT\Property()]
+    /**
+     * @OA\Property()
+     */
     public RiskResponseLifecycleStatus $lifecycle_status;
 
     /**
@@ -53,5 +52,4 @@ class RiskResponse extends NamedBaseModel
      * @var \App\Virtual\Models\Assessment
      */
     private $assessment;
-    
 }

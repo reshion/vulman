@@ -1,24 +1,21 @@
 <?php
 
 namespace App\Virtual\Models;
+
 use OpenApi\Annotations as OA;
 
 /**
  * @OA\Schema(
  *     title="BaseModel",
- *     description="BaseModel",
- *     @OA\Xml(
- *        name="BaseModel"
- *    )
+ *     description="Base Model",
  * )
  */
 class BaseModel
 {
-
     /**
      * @OA\Property(
-     *     title="ID",
-     *     description="ID",
+     *     title="Id",
+     *     description="Id",
      *     format="int64",
      *     example=1
      * )
@@ -26,7 +23,6 @@ class BaseModel
      * @var integer
      */
     private $id;
-
 
     /**
      * @OA\Property(
