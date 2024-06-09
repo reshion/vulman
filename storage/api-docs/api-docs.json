@@ -1005,6 +1005,51 @@
                 ]
             }
         },
+        "/api/upload": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload a CSV",
+                "operationId": "uploadCSV",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#components/schemas/AssetStoreRequest"
+                                    },
+                                    {
+                                        "properties": {
+                                            "file": {
+                                                "description": "Item CsV",
+                                                "type": "string",
+                                                "format": "binary"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/user/login": {
             "post": {
                 "tags": [

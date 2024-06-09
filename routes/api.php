@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VulnerabilityController;
 
 Route::post('/user/login', [UserController::class, 'login'])->withoutMiddleware(['auth:sanctum']);
-
+Route::post('/upload', [UploadController::class, 'upload']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
