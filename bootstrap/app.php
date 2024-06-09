@@ -14,8 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
-        $middleware->append(BearerFakeMiddleware::class);
-        $middleware->statefulApi();
+        // $middleware->append(BearerFakeMiddleware::class);
+        // $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

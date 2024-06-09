@@ -23,16 +23,16 @@ class UserController extends Controller
      *         @OA\JsonContent(ref="#/components/schemas/LoginRequest")
      *     ),
      * 
-    *  @OA\Response(
-    *         response="200",
-    *         description="ok",
-    *                     @OA\JsonContent(
-    *                         type="string",
-    *                         description="JWT access token",
-    *                         example="Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185"
-    *                     ),
-    *                       
-    *     ),
+     *  @OA\Response(
+     *         response="200",
+     *         description="ok",
+     *                     @OA\JsonContent(
+     *                         type="string",
+     *                         description="JWT access token",
+     *                         example="Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185"
+     *                     ),
+     *                       
+     *     ),
      * )
      */
     public function login(Request $request)
@@ -48,8 +48,8 @@ class UserController extends Controller
 
         $user = $request->user();
         $token = $user->createToken('API Token')->plainTextToken;
-        
-        return response('Bearer ' . $token);
+
+        return response()->json('Bearer ' . $token);
     }
 
     /**
@@ -72,5 +72,35 @@ class UserController extends Controller
     public function current(Request $request)
     {
         return new UserResource($request->user()->load('company.tenant'));
-    }   
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/user/logout",
+     *     summary="Logout user",
+     *     operationId="logout",
+     *     security={{"sanctum":{}}},
+     *     tags={"User"},
+     * 
+     *  @OA\Response(
+     *         response="200",
+     *         description="ok",                       
+     *     ),
+     * )
+     */
+    public function logout(Request $request)
+    {
+
+        // Token ungültig machen
+        $user = $request->user();
+        if ($user) {
+            $user->currentAccessToken()->delete();
+
+            // Alternativ alle Tokens des Benutzers ungültig machen
+            // $request->user()->tokens()->delete();
+
+            return response()->json(['message' => 'Successfully logged out']);
+        }
+        return response()->json(['message' => 'Something went wrong'], 401);
+    }
 }

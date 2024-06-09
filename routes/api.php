@@ -10,13 +10,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\VulnerabilityController;
 
-Route::post('/user/login', [UserController::class, 'login']);
+Route::post('/user/login', [UserController::class, 'login'])->withoutMiddleware(['auth:sanctum']);
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
     // User Routes
     Route::get('/user/current', [UserController::class, 'current']);
+    Route::post('/user/logout', [UserController::class, 'logout']);
 
     // Tenant Routes
     Route::apiResource('tenants', TenantController::class);
@@ -25,7 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // Asset Routes
     Route::apiResource('assets', AssetController::class);
     // Assessment Routes
-    Route::apiResource('assessments', AssessmentController::class)->withoutMiddleware(['auth:sanctum']);
+    Route::apiResource('assessments', AssessmentController::class);
     // Risk Response Routes
     Route::apiResource('risk-responses', RiskResponseController::class);
     // Vulnerability Routes
