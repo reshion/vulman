@@ -7,7 +7,6 @@ use App\Http\Requests\AssessmentUpdateRequest;
 use App\Http\Resources\AssessmentResource;
 use App\Models\Assessment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use OpenApi\Annotations as OA;
 
 /** 
