@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Business\VulnerabilityImportLogic;
+use App\Messages\VulnerabilityImportMessage;
+use App\Models\Company;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,14 +17,14 @@ class ProcessImport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $filePath;
+    protected VulnerabilityImportMessage $message;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($filePath)
+    public function __construct(VulnerabilityImportMessage $message)
     {
-        $this->filePath = $filePath;
+        $this->message = $message;
     }
 
     /**
@@ -29,22 +32,7 @@ class ProcessImport implements ShouldQueue
      */
     public function handle(): void
     {
-        $file = Storage::get($this->filePath);
-        $rows = array_map('str_getcsv', explode("\n", $file));
-
-        // Verarbeitung der Daten
-        foreach ($rows as $row) {
-            Log::info($row[0]);
-            // Hier die Datenverarbeitung einfügen, z.B. Datenbankimport
-            // Beispiel:
-            // User::create([
-            //     'name' => $row[0],
-            //     'email' => $row[1],
-            //     // weitere Felder
-            // ]);
-        }
-
-        // Datei nach Verarbeitung löschen
-        Storage::delete($this->filePath);
+       $vulnerabilityImportLogic = new VulnerabilityImportLogic($this->message);
+       $vulnerabilityImportLogic->importVulnerabilities($this->message);
     }
 }

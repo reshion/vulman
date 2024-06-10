@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Asset extends Model
 {
@@ -15,4 +16,16 @@ class Asset extends Model
         'operating_system',
         'updated_at',
     ];
+
+    public function systemgroups()
+    {
+        return $this->belongsToMany(Systemgroup::class);
+    }
+
+    public function vulnerabilities(): BelongsToMany
+    {
+        return $this->belongsToMany(Vulnerability::class, 'asset_vulnerability', 'asset_id', 'vulnerability_id')
+        ->withPivot('timestamp') // zusätzliches Pivot-Feld
+        ->withTimestamps();
+    }
 }

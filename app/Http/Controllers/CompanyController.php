@@ -7,6 +7,7 @@ use App\Http\Requests\CompanyStoreRequest;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Models\SystemGroup;
 use Illuminate\Http\Request;
 
 /** 
@@ -78,6 +79,10 @@ class CompanyController extends Controller
     public function store(CompanyStoreRequest $request)
     {
         $company = Company::create($request->validated());
+        $systemgroup = new SystemGroup();
+        $systemgroup->name = 'Default';
+        $systemgroup->company_id = $company->id;
+        $systemgroup->save();
         return new CompanyResource($company);
     }
 

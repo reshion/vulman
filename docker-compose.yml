@@ -30,7 +30,6 @@ services:
             - postgres
 
     postgres:
-        container_name: "postgres"
         image: postgres
         restart: always
         # set shared memory limit when using docker-compose

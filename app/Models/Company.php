@@ -19,4 +19,9 @@ class Company extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
+
+    public function system_groups()
+    {
+        return $this->hasMany(SystemGroup::class);
+    }
 }

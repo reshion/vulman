@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Business\VulnerabilityImportLogic;
 use App\Jobs\ProcessImport;
+use App\Messages\VulnerabilityImportMessage;
 use Illuminate\Http\Request;
 
+/** 
+ * @OAS\SecurityScheme(      
+ *      securityScheme="sanctum",
+ *      type="http",
+ *      scheme="bearer"
+ * )
+ */
 class UploadController extends Controller
 {
     /**
@@ -43,11 +52,19 @@ class UploadController extends Controller
             'file' => 'required|file|mimes:csv,txt|max:10240', // 10MB max
         ]);
 
+        $user = $request->user();
+
         // Datei speichern
         $path = $request->file('file')->store('uploads');
 
-        // Job dispatchen
-        ProcessImport::dispatch($path);
+        $message = new VulnerabilityImportMessage($path, $user->company_id);
+
+        // Job dispatchen prod
+        //ProcessImport::dispatch($message);
+
+        // Import logic direkt ausführen dev
+        $logic = new VulnerabilityImportLogic($message);
+        $logic->importVulnerabilities();
 
         return response()->json(['message' => 'File uploaded and processing started'], 200);
     }

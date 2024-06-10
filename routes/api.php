@@ -12,14 +12,13 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VulnerabilityController;
 
 Route::post('/user/login', [UserController::class, 'login'])->withoutMiddleware(['auth:sanctum']);
-Route::post('/upload', [UploadController::class, 'upload']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-
+    
     // User Routes
     Route::get('/user/current', [UserController::class, 'current']);
     Route::post('/user/logout', [UserController::class, 'logout']);
-
+    
     // Tenant Routes
     Route::apiResource('tenants', TenantController::class);
     // Company Routes
@@ -32,4 +31,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('risk-responses', RiskResponseController::class);
     // Vulnerability Routes
     Route::apiResource('vulnerabilities', VulnerabilityController::class);
-});
+
+    
+    Route::post('/upload', [UploadController::class, 'upload']);
+    });

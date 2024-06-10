@@ -49,7 +49,6 @@ class AssessmentController extends Controller
      */
     public function index(Request $request)
     {
-        Storage::disk('public')->put('example.txt', 'Contents');
         $count = $request->input('count', 10);
         $assessments = Assessment::paginate($count);
         return AssessmentResource::collection($assessments);
