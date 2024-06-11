@@ -28,7 +28,6 @@ class UploadController extends Controller
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
      *                 allOf={
-     *                     @OA\Schema(ref="#components/schemas/AssetStoreRequest"),
      *                     @OA\Schema(
      *                         @OA\Property(
      *                             description="Item CsV",

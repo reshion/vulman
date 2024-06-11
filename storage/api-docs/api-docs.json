@@ -1018,9 +1018,6 @@
                             "schema": {
                                 "allOf": [
                                     {
-                                        "$ref": "#components/schemas/AssetStoreRequest"
-                                    },
-                                    {
                                         "properties": {
                                             "file": {
                                                 "description": "Item CsV",
