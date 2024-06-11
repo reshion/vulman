@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TenantStoreRequest;
 use App\Http\Requests\TenantUpdateRequest;
 use App\Http\Resources\TenantResource;
+use App\Models\Vulnerability;
 use Illuminate\Http\Request;
 
 use OpenApi\Annotations as OA;
@@ -51,6 +52,7 @@ class TenantController extends Controller
      */
     public function index(Request $request)
     {
+        $test = Vulnerability::where('cve_details->cveMetadata->cveId', '=', 'CVE-1999-0477')->get();
         $count = $request->input('count', 10);
         $tenants = Tenant::paginate($count);
         return TenantResource::collection($tenants);
