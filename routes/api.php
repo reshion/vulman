@@ -4,6 +4,7 @@ use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\RiskResponseController;
+use App\Http\Controllers\SystemGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -29,6 +30,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('assessments', AssessmentController::class);
     // Vulnerability Routes
     Route::apiResource('vulnerabilities', VulnerabilityController::class);
+    // System Group Routes
+    Route::apiResource('system-groups', SystemGroupController::class);
 
     
     Route::post('/upload', [UploadController::class, 'upload']);

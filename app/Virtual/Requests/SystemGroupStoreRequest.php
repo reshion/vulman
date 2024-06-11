@@ -4,18 +4,18 @@ namespace App\Virtual\Requests;
 use OpenApi\Annotations as OA;
 /**
  * @OA\Schema(
- *     schema="CompanyUpdateRequest",
+ *     schema="SystemGroupStoreRequest",
  *     type="object",
- *     title="CompanyUpdateRequest"     
+ *     title="SystemGroupStoreRequest"     
  * )
  */
-class CompanyUpdateRequest
+class SystemGroupStoreRequest
 {
     /**
      * @OA\Property(
      *      title="name",
-     *      description="Name of the company",
-     *      example="A nice company name"
+     *      description="Name of the new system group",
+     *      example="A nice company"
      * )
      *
      * @var string
@@ -24,12 +24,12 @@ class CompanyUpdateRequest
 
     /**
      * @OA\Property(
-     *      title="tenant_id",
-     *      description="The tenant id of the company",
+     *      title="company_id",
+     *      description="The company id",
      *      example="1"
      * )
      *
      * @var integer
      */
-    public $tenant_id;
+    public $company_id;
 }

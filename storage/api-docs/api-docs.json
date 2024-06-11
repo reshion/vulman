@@ -605,6 +605,205 @@
                 ]
             }
         },
+        "/api/system-groups": {
+            "get": {
+                "tags": [
+                    "SystemGroups"
+                ],
+                "summary": "Lists system groups",
+                "operationId": "listSystemGroups",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SystemGroupPagingResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "SystemGroups"
+                ],
+                "summary": "Adds a new system group",
+                "operationId": "storeSystemGroup",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SystemGroupStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SystemGroupResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/system-groups/{id}": {
+            "get": {
+                "tags": [
+                    "SystemGroups"
+                ],
+                "summary": "Get system group information",
+                "description": "Returns system group",
+                "operationId": "getSystemGroup",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "System group id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SystemGroupResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "SystemGroups"
+                ],
+                "summary": "Update an existing system group",
+                "operationId": "updateSystemGroup",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "System group id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SystemGroupUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SystemGroupResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "SystemGroups"
+                ],
+                "summary": "Delete system group",
+                "description": "Deletes a system group",
+                "operationId": "deleteSystemGroup",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "System group id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SystemGroupResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/tenants": {
             "get": {
                 "tags": [
@@ -1283,6 +1482,31 @@
                     }
                 ]
             },
+            "SystemGroup": {
+                "title": "SystemGroup",
+                "description": "System Group model",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/NamedBaseModel"
+                    },
+                    {
+                        "properties": {
+                            "company_id": {
+                                "title": "Company Id",
+                                "description": "Id of the Company",
+                                "type": "integer",
+                                "format": "int64",
+                                "example": 1
+                            },
+                            "company": {
+                                "$ref": "#/components/schemas/Company"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "Tenant": {
                 "title": "Tenant",
                 "description": "Tenant model",
@@ -1466,7 +1690,13 @@
                         "title": "name",
                         "description": "Name of the company",
                         "type": "string",
-                        "example": "A nice Tenant"
+                        "example": "A nice company name"
+                    },
+                    "tenant_id": {
+                        "title": "tenant_id",
+                        "description": "The tenant id of the company",
+                        "type": "integer",
+                        "example": "1"
                     }
                 },
                 "type": "object"
@@ -1485,6 +1715,42 @@
                         "description": "Users password",
                         "type": "string",
                         "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "SystemGroupStoreRequest": {
+                "title": "SystemGroupStoreRequest",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new system group",
+                        "type": "string",
+                        "example": "A nice company"
+                    },
+                    "company_id": {
+                        "title": "company_id",
+                        "description": "The company id",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "SystemGroupUpdateRequest": {
+                "title": "SystemGroupUpdateRequest",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new system group",
+                        "type": "string",
+                        "example": "A nice company"
+                    },
+                    "company_id": {
+                        "title": "company_id",
+                        "description": "The company id",
+                        "type": "integer",
+                        "example": "1"
                     }
                 },
                 "type": "object"
@@ -1549,6 +1815,15 @@
                 },
                 "type": "object"
             },
+            "AssessmentResource": {
+                "title": "AssessmentResource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Assessment"
+                    }
+                },
+                "type": "object"
+            },
             "AssessmentPagingResource": {
                 "title": "AssessmentPagingResource",
                 "properties": {
@@ -1566,14 +1841,18 @@
                 },
                 "type": "object"
             },
-            "AssessmentResource": {
-                "title": "AssessmentResource",
+            "AssetResource": {
+                "title": "AssetResource",
+                "description": "AssetResource",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/Assessment"
+                        "$ref": "#/components/schemas/Asset"
                     }
                 },
-                "type": "object"
+                "type": "object",
+                "xml": {
+                    "name": "AssetResource"
+                }
             },
             "AssetPagingResource": {
                 "title": "AssetPagingResource",
@@ -1596,17 +1875,17 @@
                     "name": "AssetPagingResource"
                 }
             },
-            "AssetResource": {
-                "title": "AssetResource",
-                "description": "AssetResource",
+            "CompanyResource": {
+                "title": "CompanyResource",
+                "description": "CompanyResource",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/Asset"
+                        "$ref": "#/components/schemas/Company"
                     }
                 },
                 "type": "object",
                 "xml": {
-                    "name": "AssetResource"
+                    "name": "CompanyResource"
                 }
             },
             "CompanyPagingResource": {
@@ -1628,19 +1907,6 @@
                 "type": "object",
                 "xml": {
                     "name": "CompanyPagingResource"
-                }
-            },
-            "CompanyResource": {
-                "title": "CompanyResource",
-                "description": "CompanyResource",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/Company"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "CompanyResource"
                 }
             },
             "Meta": {
@@ -1679,6 +1945,50 @@
                 },
                 "type": "object"
             },
+            "SystemGroupResource": {
+                "title": "SystemGroupResource",
+                "description": "SystemGroupResource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/SystemGroup"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "SystemGroupResource"
+                }
+            },
+            "SystemGroupPagingResource": {
+                "title": "SystemGroupPagingResource",
+                "description": "SystemGroupPagingResource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SystemGroup"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "SystemGroupPagingResource"
+                }
+            },
+            "TenantResource": {
+                "title": "TenantResource",
+                "description": "TenantResource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Tenant"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TenantResource"
+                }
+            },
             "TenantPagingResource": {
                 "title": "TenantPagingResource",
                 "description": "TenantPagingResource",
@@ -1700,19 +2010,6 @@
                     "name": "TenantPagingResource"
                 }
             },
-            "TenantResource": {
-                "title": "TenantResource",
-                "description": "TenantResource",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/Tenant"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "TenantResource"
-                }
-            },
             "UserResource": {
                 "title": "UserResource",
                 "description": "UserResource",
@@ -1725,6 +2022,15 @@
                 "xml": {
                     "name": "UserResource"
                 }
+            },
+            "VulnerabilityResource": {
+                "title": "VulnerabilityResource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Vulnerability"
+                    }
+                },
+                "type": "object"
             },
             "VulnerabilityPagingResource": {
                 "title": "VulnerabilityPagingResource",
@@ -1739,15 +2045,6 @@
                     },
                     "meta": {
                         "$ref": "#/components/schemas/Meta"
-                    }
-                },
-                "type": "object"
-            },
-            "VulnerabilityResource": {
-                "title": "VulnerabilityResource",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/Vulnerability"
                     }
                 },
                 "type": "object"
