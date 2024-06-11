@@ -22,14 +22,4 @@ class SystemGroupUpdateRequest
      */
     public $name;
 
-    /**
-     * @OA\Property(
-     *      title="company_id",
-     *      description="The company id",
-     *      example="1"
-     * )
-     *
-     * @var integer
-     */
-    public $company_id;
 }

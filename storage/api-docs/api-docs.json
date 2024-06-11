@@ -1745,12 +1745,6 @@
                         "description": "Name of the new system group",
                         "type": "string",
                         "example": "A nice company"
-                    },
-                    "company_id": {
-                        "title": "company_id",
-                        "description": "The company id",
-                        "type": "integer",
-                        "example": "1"
                     }
                 },
                 "type": "object"
@@ -1969,6 +1963,9 @@
                         "items": {
                             "$ref": "#/components/schemas/SystemGroup"
                         }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/Meta"
                     }
                 },
                 "type": "object",

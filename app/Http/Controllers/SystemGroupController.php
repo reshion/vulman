@@ -109,7 +109,7 @@ class SystemGroupController extends Controller
      */
     public function show(SystemGroup $systemGroup)
     {
-        return new SystemGroupResource($systemGroup->load('company'));
+        return new SystemGroupResource($systemGroup->load('company.tenant'));
     }
 
     /**

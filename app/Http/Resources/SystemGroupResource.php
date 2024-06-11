@@ -20,7 +20,7 @@ class SystemGroupResource extends JsonResource
             'company_id' => $this->company_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'company' => new TenantResource($this->whenLoaded('company')),
+            'company' => new CompanyResource($this->whenLoaded('company')),
         ];
     }
 }

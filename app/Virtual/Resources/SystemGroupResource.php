@@ -49,4 +49,14 @@ class SystemGroupResource
     * @var \App\Virtual\Models\SystemGroup[]
     */
    private $data;
+
+    /**
+     * @OA\Property(
+     *     title="Meta",
+     *     description="Meta wrapper"
+     * )
+     *
+     * @var \App\Virtual\Resources\Meta
+     */
+    private $meta;
  }
