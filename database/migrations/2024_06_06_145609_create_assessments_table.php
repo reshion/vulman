@@ -19,19 +19,19 @@ return new class extends Migration
 
             // References
             $table->unsignedBigInteger('vulnerability_id');
-            $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('system_group_id');
-            $table->unsignedBigInteger('asset_id');
+            // $table->unsignedBigInteger('company_id');
+            // $table->unsignedBigInteger('system_group_id');
+            // $table->unsignedBigInteger('asset_id');
            
             $table->foreign('vulnerability_id')->references('id')->on('vulnerabilities')->onDelete('cascade');
-            $table->foreign('company_id')->nullable()->references('id')->on('companies')->onDelete('cascade');
-            $table->foreign('system_group_id')->nullable()->references('id')->on('system_groups')->onDelete('cascade');
-            $table->foreign('asset_id')->nullable()->references('id')->on('assets')->onDelete('cascade');
+            $table->foreignId('company_id')->nullable()->constrained('companies')->onDelete('cascade');
+            $table->foreignId('system_group_id')->nullable()->constrained('system_groups')->onDelete('cascade');
+            $table->foreignId('asset_id')->nullable()->constrained('assets')->onDelete('cascade');
 
             // Risk Response
-            $table->string('risk_response_name');
-            $table->enum('risk_response_lifecycle_status', ['OPEN', 'IN_PROGRESS', 'CLOSED']);
-            $table->timestamp('risk_response_created')->useCurrent();
+            $table->string('risk_response_name')->nullable();
+            $table->enum('risk_response_lifecycle_status', ['OPEN', 'IN_PROGRESS', 'CLOSED'])->nullable();
+            $table->timestamp('risk_response_created')->nullable()->useCurrent();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrent()->useCurrentOnUpdate();
