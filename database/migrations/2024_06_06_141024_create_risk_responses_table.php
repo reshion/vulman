@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('created');
             $table->enum('lifecycle_status', ['OPEN', 'IN_PROGRESS', 'CLOSED']);
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->timestamp('updated_at')->nullable()->useCurrent()->useCurrentOnUpdate();
         });
     }
 

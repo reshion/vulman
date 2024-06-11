@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('cve_id');
             $table->jsonb('cve_details');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->timestamp('updated_at')->nullable()->useCurrent()->useCurrentOnUpdate();
         });
     }
 

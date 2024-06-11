@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('unique_id')->uniqid();
             $table->string('operating_system');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->timestamp('updated_at')->nullable()->useCurrent()->useCurrentOnUpdate();
         });
     }
 

@@ -29,7 +29,7 @@ class ProcessImport implements ShouldQueue
      */
     public function handle(): void
     {
-       $vulnerabilityImportLogic = new VulnerabilityImportLogic($this->message);
-       $vulnerabilityImportLogic->importVulnerabilities($this->message);
+        $vulnerabilityImportLogic = new VulnerabilityImportLogic($this->message);
+        $vulnerabilityImportLogic->importVulnerabilities($this->message);
     }
 }

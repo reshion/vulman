@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Company::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->timestamp('updated_at')->nullable()->useCurrent()->useCurrentOnUpdate();
         });
     }
 

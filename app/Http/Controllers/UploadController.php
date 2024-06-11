@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Business\VulnerabilityImportLogic;
+use App\Jobs\ProcessImport;
 use App\Messages\VulnerabilityImportMessage;
 use Illuminate\Http\Request;
 
@@ -59,11 +60,11 @@ class UploadController extends Controller
         $message = new VulnerabilityImportMessage($path, $user->company_id);
 
         // Job dispatchen wenn productive
-        //ProcessImport::dispatch($message);
+        ProcessImport::dispatch($message);
 
         // Import logic direkt ausführen dev
-        $logic = new VulnerabilityImportLogic($message);
-        $logic->importVulnerabilities();
+        //$logic = new VulnerabilityImportLogic($message);
+        //$logic->importVulnerabilities();
 
         return response()->json(['message' => 'File uploaded and processing started'], 200);
     }
