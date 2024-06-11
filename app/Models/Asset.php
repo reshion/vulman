@@ -17,15 +17,15 @@ class Asset extends Model
         'updated_at',
     ];
 
-    public function systemgroups()
+    public function system_groups(): BelongsToMany
     {
         return $this->belongsToMany(Systemgroup::class);
     }
 
     public function vulnerabilities(): BelongsToMany
     {
-        return $this->belongsToMany(Vulnerability::class, 'asset_vulnerability', 'asset_id', 'vulnerability_id')
-        ->withPivot('timestamp') // zusätzliches Pivot-Feld
-        ->withTimestamps();
+        return $this->belongsToMany(Vulnerability::class, 'asset_vulnerabilities')
+                    ->withPivot('scan_import_job_id')
+                    ->withTimestamps();
     }
 }

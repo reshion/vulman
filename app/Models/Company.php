@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Company extends Model
 {
@@ -20,7 +21,7 @@ class Company extends Model
         return $this->belongsTo(Tenant::class);
     }
 
-    public function system_groups()
+    public function system_groups(): HasMany
     {
         return $this->hasMany(SystemGroup::class);
     }

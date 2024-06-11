@@ -3,6 +3,7 @@
 namespace App\Virtual\Models;
 
 use App\Enums\AssessmentLifecycleStatus;
+use App\Enums\RiskResponseLifecycleStatus;
 use OpenApi\Annotations as OA;
 
 /**
@@ -30,4 +31,9 @@ class Assessment extends NamedBaseModel
      * @OA\Property()
      */
     public AssessmentLifecycleStatus $lifecycle_status;
+
+    /**
+     * @OA\Property()
+     */
+    public RiskResponseLifecycleStatus $risk_response_lifecycle_status;
 }

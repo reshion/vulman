@@ -605,206 +605,6 @@
                 ]
             }
         },
-        "/api/risk-responses": {
-            "get": {
-                "tags": [
-                    "RiskResponses"
-                ],
-                "summary": "Lists risk-responses",
-                "operationId": "listRiskResponses",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Page number",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 1
-                        }
-                    },
-                    {
-                        "name": "count",
-                        "in": "query",
-                        "description": "Number of items per page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 10
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RiskResponsePagingResource"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "RiskResponses"
-                ],
-                "summary": "Adds a new risk-response",
-                "operationId": "storeRiskResponse",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RiskResponseStoreRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RiskResponseResource"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/risk-responses/{id}": {
-            "get": {
-                "tags": [
-                    "RiskResponses"
-                ],
-                "summary": "Get RiskResponse information",
-                "description": "Returns RiskResponse data",
-                "operationId": "showRiskResponse",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "RiskResponse id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RiskResponseResource"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "RiskResponses"
-                ],
-                "summary": "Update RiskResponse information",
-                "description": "Returns updated RiskResponse data",
-                "operationId": "updateRiskResponse",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "RiskResponse id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RiskResponseStoreRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RiskResponseResource"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "RiskResponses"
-                ],
-                "summary": "Delete RiskResponse",
-                "description": "Deletes a single RiskResponse",
-                "operationId": "deleteRiskResponse",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "RiskResponse id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RiskResponseResource"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
         "/api/tenants": {
             "get": {
                 "tags": [
@@ -1364,6 +1164,9 @@
                             },
                             "lifecycle_status": {
                                 "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+                            },
+                            "risk_response_lifecycle_status": {
+                                "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
                             }
                         },
                         "type": "object"
@@ -1474,41 +1277,6 @@
                                 "description": "Name of the entity",
                                 "type": "string",
                                 "example": "Elmofuchto"
-                            }
-                        },
-                        "type": "object"
-                    }
-                ]
-            },
-            "RiskResponse": {
-                "title": "RiskResponse",
-                "description": "RiskResponse model",
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/NamedBaseModel"
-                    },
-                    {
-                        "properties": {
-                            "created": {
-                                "title": "created",
-                                "description": "Created date of the RiskResponse",
-                                "type": "string",
-                                "format": "date",
-                                "example": "2020-01-27"
-                            },
-                            "lifecycle_status": {
-                                "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
-                            },
-                            "assessment_id": {
-                                "title": "Assessment ID",
-                                "description": "Assessment's id of the RiskResponse",
-                                "type": "integer",
-                                "format": "int64",
-                                "example": 1
-                            },
-                            "assessment": {
-                                "$ref": "#/components/schemas/Assessment"
                             }
                         },
                         "type": "object"
@@ -1721,56 +1489,6 @@
                 },
                 "type": "object"
             },
-            "RiskResponseStoreRequest": {
-                "title": "RiskResponseStoreRequest",
-                "properties": {
-                    "name": {
-                        "title": "name",
-                        "description": "Name of the new Assessment",
-                        "type": "string",
-                        "example": "Approve"
-                    },
-                    "created": {
-                        "title": "created",
-                        "description": "The date the RiskResponse was created",
-                        "type": "string",
-                        "format": "date",
-                        "example": "2021-10-10"
-                    },
-                    "lifecycle_status": {
-                        "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
-                    },
-                    "assessment_id": {
-                        "title": "assessment_id",
-                        "description": "The assessment id of the risk response",
-                        "type": "integer",
-                        "example": "1"
-                    }
-                },
-                "type": "object"
-            },
-            "RiskResponseUpdateRequest": {
-                "title": "RiskResponseUpdateRequest",
-                "properties": {
-                    "name": {
-                        "title": "name",
-                        "description": "Name of the new Assessment",
-                        "type": "string",
-                        "example": "Approve"
-                    },
-                    "created": {
-                        "title": "created",
-                        "description": "The date the RiskResponse was created",
-                        "type": "string",
-                        "format": "date",
-                        "example": "2021-10-10"
-                    },
-                    "lifecycle_status": {
-                        "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
-                    }
-                },
-                "type": "object"
-            },
             "TenantStoreRequest": {
                 "title": "TenantStoreRequest",
                 "properties": {
@@ -1957,32 +1675,6 @@
                         "title": "Total",
                         "description": "Total",
                         "type": "integer"
-                    }
-                },
-                "type": "object"
-            },
-            "RiskResponsePagingResource": {
-                "title": "RiskResponsePagingResource",
-                "properties": {
-                    "data": {
-                        "title": "Data",
-                        "description": "Data wrapper",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/RiskResponse"
-                        }
-                    },
-                    "meta": {
-                        "$ref": "#/components/schemas/Meta"
-                    }
-                },
-                "type": "object"
-            },
-            "RiskResponseResource": {
-                "title": "RiskResponseResource",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/RiskResponse"
                     }
                 },
                 "type": "object"
