@@ -23,7 +23,7 @@ class Asset extends BaseModel
      *
      * @var string
      */
-    public $fqdn;
+    private $fqdn;
 
     /**
      * @OA\Property(
@@ -35,7 +35,7 @@ class Asset extends BaseModel
      *
      * @var string
      */
-    public $unique_id;
+    private $unique_id;
 
     /**
      * @OA\Property(
@@ -47,5 +47,5 @@ class Asset extends BaseModel
      *
      * @var string
      */
-    public $operating_system;
+    private $operating_system;
 }

@@ -21,5 +21,5 @@ class NamedBaseModel extends BaseModel
      *
      * @var string
      */
-    public $name;
+    private $name;
 }

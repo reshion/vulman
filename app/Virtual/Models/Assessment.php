@@ -25,15 +25,38 @@ class Assessment extends NamedBaseModel
      *
      * @var date
      */
-    public $created;
+    private $created;
 
     /**
      * @OA\Property()
      */
-    public AssessmentLifecycleStatus $lifecycle_status;
+    private AssessmentLifecycleStatus $lifecycle_status;
 
     /**
      * @OA\Property()
      */
-    public RiskResponseLifecycleStatus $risk_response_lifecycle_status;
+    private RiskResponseLifecycleStatus $risk_response_lifecycle_status;
+
+
+    /**
+     * @OA\Property(
+     *      title="Company Id",
+     *      description="Company's id of the Assessment",
+     *      format="int64",
+     *      example=1
+     * )
+     *
+     * @var integer
+     */
+    private $company_id;
+
+    /**
+     * @OA\Property(
+     *     title="Company",
+     *     description="Company of the Assessment"
+     * )
+     *
+     * @var \App\Virtual\Models\Company
+     */
+    private $company;
 }

@@ -15,21 +15,12 @@ class SystemGroupStoreRequest
      * @OA\Property(
      *      title="name",
      *      description="Name of the new system group",
-     *      example="A nice company"
+     *      example="A nice system group name"
      * )
      *
      * @var string
      */
     public $name;
 
-    /**
-     * @OA\Property(
-     *      title="company_id",
-     *      description="The company id",
-     *      example="1"
-     * )
-     *
-     * @var integer
-     */
-    public $company_id;
+   
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SystemGroupType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyStoreRequest;
 use App\Http\Requests\CompanyUpdateRequest;
@@ -80,7 +81,8 @@ class CompanyController extends Controller
     {
         $company = Company::create($request->validated());
         $systemgroup = new SystemGroup();
-        $systemgroup->name = 'Default';
+        $systemgroup->name = 'Default System Group';
+        $systemgroup->system_group_type = SystemGroupType::DEFAULT;
         $systemgroup->company_id = $company->id;
         $systemgroup->save();
         return new CompanyResource($company);

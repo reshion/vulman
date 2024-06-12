@@ -2,6 +2,7 @@
 
 namespace App\Virtual\Models;
 
+use App\Enums\SystemGroupType;
 use OpenApi\Annotations as OA;
 
 /**
@@ -12,6 +13,12 @@ use OpenApi\Annotations as OA;
  */
 class SystemGroup extends NamedBaseModel
 {
+
+    /**
+     * @OA\Property()
+     */
+    private SystemGroupType $type;
+
     /**
      * @OA\Property(
      *      title="Company Id",
@@ -22,7 +29,7 @@ class SystemGroup extends NamedBaseModel
      *
      * @var integer
      */
-    public $company_id;
+    private $company_id;
 
     /**
      * @OA\Property(

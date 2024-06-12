@@ -20,6 +20,7 @@ class SystemGroupResource extends JsonResource
             'company_id' => $this->company_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'type' => $this->type,
             'company' => new CompanyResource($this->whenLoaded('company')),
         ];
     }

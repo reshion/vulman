@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\SystemGroupType;
 use App\Http\Requests\SystemGroupStoreRequest;
 use App\Http\Requests\SystemGroupUpdateRequest;
 use App\Http\Resources\SystemGroupResource;
 use App\Models\SystemGroup;
 use Illuminate\Http\Request;
+use PHPUnit\Event\Telemetry\System;
 
 /** 
  * @OAS\SecurityScheme(      
@@ -76,10 +78,13 @@ class SystemGroupController extends Controller
      */
     public function store(SystemGroupStoreRequest $request)
     {
-        $systemGroup = SystemGroup::create($request->validated());
+        
+
+        $systemGroup = new SystemGroup($request->validated());
         $user = $request->user();
         $systemGroup->company_id = $user->company_id;
-        $systemGroup->save();
+        $systemGroup->type = SystemGroupType::CUSTOM;
+        $systemGroup = SystemGroup::create($systemGroup->toArray());
         return new SystemGroupResource($systemGroup);
     }
 
