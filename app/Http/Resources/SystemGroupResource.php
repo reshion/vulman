@@ -22,6 +22,7 @@ class SystemGroupResource extends JsonResource
             'updated_at' => $this->updated_at,
             'type' => $this->type,
             'company' => new CompanyResource($this->whenLoaded('company')),
+            'assets' => new AssetPagingResource($this->whenLoaded('assets')),
         ];
     }
 }

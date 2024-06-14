@@ -38,25 +38,25 @@ class SystemGroupResource
  * )
  */
 
- class SystemGroupPagingResource
- {
-   /**
-    * @OA\Property(
-    *     title="Data",
-    *     description="Data wrapper"
-    * )
-    *
-    * @var \App\Virtual\Models\SystemGroup[]
-    */
-   private $data;
+class SystemGroupPagingResource
+{
+  /**
+   * @OA\Property(
+   *     title="Data",
+   *     description="Data wrapper"
+   * )
+   *
+   * @var \App\Virtual\Models\SystemGroup[]
+   */
+  private $data;
 
-    /**
-     * @OA\Property(
-     *     title="Meta",
-     *     description="Meta wrapper"
-     * )
-     *
-     * @var \App\Virtual\Resources\Meta
-     */
-    private $meta;
- }
+  /**
+   * @OA\Property(
+   *     title="Meta",
+   *     description="Meta wrapper"
+   * )
+   *
+   * @var \App\Virtual\Resources\Meta
+   */
+  private $meta;
+}

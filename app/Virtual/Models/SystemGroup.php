@@ -8,7 +8,7 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Schema(
  *     title="SystemGroup",
- *     description="System Group model",
+ *     description="System Group model" *    
  * )
  */
 class SystemGroup extends NamedBaseModel
@@ -40,4 +40,16 @@ class SystemGroup extends NamedBaseModel
      * @var \App\Virtual\Models\Company
      */
     private $company;
+
+
+    /**
+     * @OA\Property(
+     *     title="Assets",
+     *     description="System group assets list", 
+     *     
+     * )
+     *
+     * @var \App\Virtual\Models\Asset[]
+     */
+    private $assets;
 }

@@ -51,7 +51,8 @@ class SystemGroupController extends Controller
     public function index(Request $request)
     {
         $count = $request->input('count', 10);
-        $companies = SystemGroup::with('company')->paginate($count);
+        $companies = SystemGroup::with(['company', 'assets'])->paginate($count);
+        // $companies->
         return SystemGroupResource::collection($companies);
     }
 
@@ -78,7 +79,7 @@ class SystemGroupController extends Controller
      */
     public function store(SystemGroupStoreRequest $request)
     {
-        
+
 
         $systemGroup = new SystemGroup($request->validated());
         $user = $request->user();
