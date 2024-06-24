@@ -1351,7 +1351,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/VulnerabilityResource"
+                                    "$ref": "#/components/schemas/BaseSeverityCountResponse"
                                 }
                             }
                         }
@@ -2102,6 +2102,37 @@
                     },
                     "meta": {
                         "$ref": "#/components/schemas/Meta"
+                    }
+                },
+                "type": "object"
+            },
+            "BaseSeverityCountResponse": {
+                "title": "BaseSeverityCountResponse",
+                "description": "BaseSeverityCountResponse",
+                "properties": {
+                    "critical": {
+                        "title": "Crtitical",
+                        "description": "Crtitical severity count",
+                        "type": "integer",
+                        "default": 0
+                    },
+                    "high": {
+                        "title": "High",
+                        "description": "High severity count",
+                        "type": "integer",
+                        "default": 0
+                    },
+                    "medium": {
+                        "title": "Medium",
+                        "description": "Medium severity count",
+                        "type": "integer",
+                        "default": 0
+                    },
+                    "low": {
+                        "title": "Low",
+                        "description": "Low severity count",
+                        "type": "integer",
+                        "default": 0
                     }
                 },
                 "type": "object"
