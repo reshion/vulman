@@ -31,10 +31,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('assessments', AssessmentController::class);
     // Vulnerability Routes
     Route::apiResource('vulnerabilities', VulnerabilityController::class);
-    Route::get('vulnerabilities/system-group/find/{id}', [VulnerabilityController::class, 'find']);
+    Route::get('vulnerabilities/system-group/find/{id}', [VulnerabilityController::class, 'findBySystemGroup']);
+    Route::get('vulnerabilities/asset/find/{id}', [VulnerabilityController::class, 'findByAsset']);
     // System Group Routes
     Route::apiResource('system-groups', SystemGroupController::class);
 
 
-    Route::post('/import', [ImportController::class, 'import']);
+    Route::post('/import/scan', [ImportController::class, 'import']);
 });

@@ -18,7 +18,7 @@ class ImportController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/import",
+     *     path="/api/import/scan",
      *     operationId="importCSV",
      *     tags={"Import"},
      *     security={{"sanctum":{}}},
