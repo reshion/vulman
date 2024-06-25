@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('vulnerabilities', VulnerabilityController::class);
     Route::get('vulnerabilities/system-group/find/{id}', [VulnerabilityController::class, 'findBySystemGroup']);
     Route::get('vulnerabilities/asset/find/{id}', [VulnerabilityController::class, 'findByAsset']);
+    Route::get('vulnerabilities/company/find/', [VulnerabilityController::class, 'findByCompany']);
     // System Group Routes
     Route::apiResource('system-groups', SystemGroupController::class);
 

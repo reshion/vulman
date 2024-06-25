@@ -1401,6 +1401,33 @@
                     }
                 ]
             }
+        },
+        "/api/vulnerabilities/company/find": {
+            "get": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Get vulerabilities by company",
+                "description": "Get vulerabilities by company",
+                "operationId": "findByCompany",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BaseSeverityCountResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "components": {
