@@ -31,9 +31,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('assessments', AssessmentController::class);
     // Vulnerability Routes
     Route::apiResource('vulnerabilities', VulnerabilityController::class);
-    Route::get('vulnerabilities/system-group/find/{id}', [VulnerabilityController::class, 'findBySystemGroup']);
-    Route::get('vulnerabilities/asset/find/{id}', [VulnerabilityController::class, 'findByAsset']);
-    Route::get('vulnerabilities/company/find/', [VulnerabilityController::class, 'findByCompany']);
+    Route::get('vulnerabilities/base-severity/system-group/{systemGroupId}', [VulnerabilityController::class, 'getBaseSeverityBySystemGroup']);
+    Route::get('vulnerabilities/base-severity/asset/{assetId}', [VulnerabilityController::class, 'getBaseSeverityByAsset']);
+    Route::get('vulnerabilities/company', [VulnerabilityController::class, 'getByCompany']);
+    Route::get('vulnerabilities/company/asset-count/', [VulnerabilityController::class, 'getByCompanyWithAssetCount']);
     // System Group Routes
     Route::apiResource('system-groups', SystemGroupController::class);
 

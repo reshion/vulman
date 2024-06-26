@@ -51,9 +51,10 @@ class SystemGroupController extends Controller
     public function index(Request $request)
     {
         $count = $request->input('count', 10);
-        $companies = SystemGroup::with(['company', 'assets'])->paginate($count);
+        $user = $request->user();
+        $systemGroup = SystemGroup::with(['company', 'assets'])->where('company_id', $user->company_id)->paginate($count);
         // $companies->
-        return SystemGroupResource::collection($companies);
+        return SystemGroupResource::collection($systemGroup);
     }
 
     /**
