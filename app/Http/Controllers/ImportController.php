@@ -26,8 +26,6 @@ class ImportController extends Controller
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
-     *             @OA\Schema(
-     *                 allOf={
      *                     @OA\Schema(
      *                         @OA\Property(
      *                             description="Item CsV",
@@ -35,8 +33,6 @@ class ImportController extends Controller
      *                             type="string", format="binary"
      *                         )
      *                     )
-     *                 }
-     *             )
      *         )
      *     ),
      *     @OA\Response(response=200,description="successful operation",
