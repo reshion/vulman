@@ -48,4 +48,14 @@ class Asset extends BaseModel
      * @var string
      */
     private $operating_system;
+
+    /**
+     * @OA\Property(
+     *     title="Vulnerabilities",
+     *     description="Asset vulnerabilities model"
+     * )
+     *
+     * @var \App\Virtual\Models\Vulnerabilities[]
+     */
+    private $vulnerabilities;
 }

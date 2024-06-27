@@ -124,7 +124,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        return new AssetResource($asset);
+        return new AssetResource($asset->load('vulnerabilities'));
     }
 
 
