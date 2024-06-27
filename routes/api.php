@@ -39,5 +39,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('system-groups', SystemGroupController::class);
 
 
-    Route::post('/import/scan', [ImportController::class, 'import']);
+    Route::post('/import/scan-results', [ImportController::class, 'importScanResults']);
 });

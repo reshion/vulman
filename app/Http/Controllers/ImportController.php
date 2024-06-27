@@ -18,8 +18,8 @@ class ImportController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="/api/import/scan",
-     *     operationId="importCSV",
+     *     path="/api/import/scan-results",
+     *     operationId="importScanResults",
      *     tags={"Import"},
      *     security={{"sanctum":{}}},
      *     summary="Import a CSV",
@@ -44,7 +44,7 @@ class ImportController extends Controller
      *     ),
      * )
      */
-    public function import(Request $request)
+    public function importScanResults(Request $request)
     {
         // Validierung
         $request->validate([
