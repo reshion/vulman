@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('assets', AssetController::class);
     // Assessment Routes
     Route::apiResource('assessments', AssessmentController::class);
+    Route::post('/assessments/find', [AssessmentController::class, 'find']);
+    Route::post('/assessments/store-assessment/vulnerability', [AssessmentController::class, 'storeAssessmentVulnerability']);
+
     // Scan Import Job Routes
     Route::apiResource('scan-import-jobs', ScanImportJobController::class);
     // Vulnerability Routes

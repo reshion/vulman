@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AssessmentLifecycleStatus;
 use App\Http\Requests\AssessmentStoreRequest;
 use App\Http\Requests\AssessmentUpdateRequest;
 use App\Http\Resources\AssessmentResource;
 use App\Models\Assessment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use OpenApi\Annotations as OA;
+use Termwind\Components\Li;
 
 /** 
  * @OAS\SecurityScheme(      
@@ -81,6 +85,82 @@ class AssessmentController extends Controller
         return new AssessmentResource($assessment);
     }
 
+     /**
+     * @OA\Post(
+     *     path="/api/assessments/store-assessment/vulnerability",
+     *     operationId="storeAssessmentVulnerability",
+     *     tags={"Assessments"},
+     *     security={{"sanctum":{}}},
+     *     summary="Adds a new assessment",
+     *     @OA\Parameter(
+     *         name="vulnerability_id",
+     *         in="query",
+     *         description="Vulnerability id",
+     *         required=true,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="asset_id",
+     *         in="query",
+     *         description="Asset id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="system_group_id",
+     *         in="query",
+     *         description="System group id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="company_id",
+     *         in="query",
+     *         description="Company id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/AssessmentResource")
+     *     )
+     * )
+     */
+
+     public function storeAssessmentVulnerability(Request $request)
+     {
+         // Validierung der Anforderung
+         $validator = Validator::make($request->all(), [
+             'vulnerability_id' => 'required|integer',
+             'asset_id' => 'nullable|integer',
+             'company_id' => 'nullable|integer',
+             'system_group_id' => 'nullable|integer',
+         ]);
+ 
+         if ($validator->fails()) {
+             return response()->json(['errors' => $validator->errors()], 422);
+         }
+ 
+         // Sicherstellen, dass einer der optionalen Fremdschlüssel übermittelt wird
+         if (!$request->hasAny(['asset_id', 'company_id', 'system_group_id'])) {
+             return response()->json(['error' => 'Either asset_id, company_id, or system_group_id must be provided.'], 422);
+         }
+ 
+         // Assessment erstellen und speichern
+         $assessment = new Assessment();
+         $assessment->name = "APPROVE";
+         $assessment->lifecycle_status = AssessmentLifecycleStatus::CLOSED;
+         $assessment->vulnerability_id = $request->input('vulnerability_id');
+         $assessment->asset_id = $request->input('asset_id');
+         $assessment->company_id = $request->input('company_id');
+         $assessment->system_group_id = $request->input('system_group_id');
+         $assessment->save();
+ 
+         // Rückgabe der Ressource
+         return new AssessmentResource($assessment);
+     }
+
     /**
      * @OA\Get(
      *      path="/api/assessments/{id}",
@@ -108,6 +188,71 @@ class AssessmentController extends Controller
     public function show(Assessment $assessment)
     {
         return new AssessmentResource($assessment);
+    }
+    /**
+     * @OA\POST(
+     *     path="/api/assessments/find",
+     *     operationId="findAssessments",
+     *     summary="Find assessments by vulnerability id, asset id, system group id, company id",
+     *     tags={"Assessments"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="vulnerability_id",
+     *         in="query",
+     *         description="Vulnerability id",
+     *         required=true,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="asset_id",
+     *         in="query",
+     *         description="Asset id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="system_group_id",
+     *         in="query",
+     *         description="System group id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="company_id",
+     *         in="query",
+     *         description="Company id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/AssessmentResource")
+     *     )
+     * )
+     */
+    public function find(Request $request)
+    {
+        Log::info('find method called');
+        
+        $vulnerabilityId = $request->input('vulnerability_id');
+        $assetId = $request->input('asset_id');
+        $systemGroupId = $request->input('system_group_id');
+        $companyId = $request->input('company_id');
+    
+        $assessments = Assessment::where('vulnerability_id', $vulnerabilityId)
+            ->when($assetId, function ($query, $assetId) {
+                return $query->where('asset_id', $assetId);
+            })
+            ->when($systemGroupId, function ($query, $systemGroupId) {
+                return $query->where('system_group_id', $systemGroupId);
+            })
+            ->when($companyId, function ($query, $companyId) {
+                return $query->where('company_id', $companyId);
+            })
+            ->get();
+    
+        return AssessmentResource::collection($assessments);
     }
 
 

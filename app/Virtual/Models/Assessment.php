@@ -59,4 +59,74 @@ class Assessment extends NamedBaseModel
      * @var \App\Virtual\Models\Company
      */
     private $company;
+
+
+    /**
+     * @OA\Property(
+     *      title="Vulnerability Id",
+     *      description="Vulnerability's id of the Assessment",
+     *      format="int64",
+     *      example=1
+     * )
+     *
+     * @var integer
+     */
+    private $vulnerability_id;
+    /**
+     * @OA\Property(
+     *     title="Vulnerabilities",
+     *     description="Assessment vulnerabilities model"
+     * )
+     *
+     * @var \App\Virtual\Models\Vulnerability
+     */
+
+    private $vulnerability;
+
+
+    /**
+     * @OA\Property(
+     *      title="Asset Id",
+     *      description="Asset's id of the Assessment",
+     *      format="int64",
+     *      example=1
+     * )
+     *
+     * @var integer
+     */
+    private $asset_id;
+
+    /**
+     * @OA\Property(
+     *     title="Assets",
+     *     description="Assessment assets model"
+     * )
+     *
+     * @var \App\Virtual\Models\Asset
+     */
+    private $asset;
+
+    /**
+     * @OA\Property(
+     *      title="System Group Id",
+     *      description="System Group's id of the Assessment",
+     *      format="int64",
+     *      example=1
+     * )
+     *
+     * @var integer
+     */
+    private $system_group_id;
+
+    /**
+     * @OA\Property(
+     *     title="System Groups",
+     *     description="Assessment system groups model"
+     * )
+     *
+     * @var \App\Virtual\Models\SystemGroup
+     */
+
+    private $system_group;
 }
+

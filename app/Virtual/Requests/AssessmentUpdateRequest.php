@@ -40,5 +40,40 @@ class AssessmentUpdateRequest
     #[OAT\Property()]
     public AssessmentLifecycleStatus $lifecycle_status;
 
+     /**
+     * @OA\Property(
+     *      title="company_id",
+     *      description="The company id of the Assessment",
+     *      example="1"
+     * )
+     *
+     * @var integer
+     */
+    public $company_id;
+
+    /**
+     * @OA\Property(
+     *      title="system_group_id",
+     *      description="The system group id of the Assessment",
+     *      example="1"
+     * )
+     *
+     * @var integer
+     */
+
+    public $system_group_id;
+
+    /**
+     * @OA\Property(
+     *      title="asset_id",
+     *      description="The asset id of the Assessment",
+     *      example="1"
+     * )
+     *
+     * @var integer
+     */
+
+    public $asset_id;
+
 
 }

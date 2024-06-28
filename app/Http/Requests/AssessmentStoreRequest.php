@@ -26,6 +26,10 @@ class AssessmentStoreRequest extends FormRequest
         return [
             'name' => 'string|max:255',
             'created' => 'required|date',
+            'vulnerability_id' => 'required|exists:vulnerabilities,id',
+            'company_id' => 'required|exists:companies,id',
+            'system_group_id' => 'required|exists:system_groups,id',
+            'asset_id'  => 'required|exists:assets,id',
             'lifecycle_status' => [Rule::enum(AssessmentLifecycleStatus::class)],
         ];
     }
