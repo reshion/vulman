@@ -25,7 +25,6 @@ class AssessmentUpdateRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string|max:255',
-            'created' => 'sometimes|required|date',
             'vulnerability_id' => 'required|exists:vulnerabilities,id',
             'company_id' => 'required|exists:companies,id',
             'system_group_id' => 'required|exists:system_groups,id',

@@ -25,17 +25,6 @@ class AssessmentUpdateRequest
      */
     public $name;
 
-    /**
-     * @OA\Property(
-     *      title="created",
-     *      description="The date the Assessment was created",
-     *      example="2021-10-10"
-     * )
-     *
-     * @var date
-     */
-    public $created;
-    
 
     #[OAT\Property()]
     public AssessmentLifecycleStatus $lifecycle_status;

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\AssessmentLifecycleStatus;
+use App\Rules\OneOfThreeAssessmentRequired;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,12 +25,23 @@ class AssessmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255',
-            'created' => 'required|date',
-            'vulnerability_id' => 'required|exists:vulnerabilities,id',
-            'company_id' => 'required|exists:companies,id',
-            'system_group_id' => 'required|exists:system_groups,id',
-            'asset_id'  => 'required|exists:assets,id',
+            'name' => 'string|max:255',            
+            'vulnerability_id' => 'required:vulnerabilities,id',
+            'company_id' => [
+                'nullable',
+                'exists:companies,id',
+                new OneOfThreeAssessmentRequired('asset_id', 'system_group_id', 'company_id')
+            ],
+            'system_group_id' => [
+                'nullable',
+                'exists:system_groups,id',
+                new OneOfThreeAssessmentRequired('asset_id', 'system_group_id', 'company_id')
+            ],
+            'asset_id' => [
+                'nullable',
+                'exists:assets,id',
+                new OneOfThreeAssessmentRequired('asset_id', 'system_group_id', 'company_id')
+            ],
             'lifecycle_status' => [Rule::enum(AssessmentLifecycleStatus::class)],
         ];
     }

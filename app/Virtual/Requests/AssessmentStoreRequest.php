@@ -24,17 +24,6 @@ class AssessmentStoreRequest
      * @var string
      */
     public $name;
-
-    /**
-     * @OA\Property(
-     *      title="created",
-     *      description="The date the Assessment was created",
-     *      example="2021-10-10"
-     * )
-     *
-     * @var date
-     */
-    public $created;
     
 
     #[OAT\Property()]
@@ -44,7 +33,8 @@ class AssessmentStoreRequest
      * @OA\Property(
      *      title="company_id",
      *      description="The company id of the Assessment",
-     *      example="1"
+     *      example="1",
+     *      nullable=true
      * )
      *
      * @var integer
@@ -55,7 +45,8 @@ class AssessmentStoreRequest
      * @OA\Property(
      *      title="system_group_id",
      *      description="The system group id of the Assessment",
-     *      example="1"
+     *      example="1",
+     *      nullable=true
      * )
      *
      * @var integer
@@ -67,7 +58,8 @@ class AssessmentStoreRequest
      * @OA\Property(
      *      title="asset_id",
      *      description="The asset id of the Assessment",
-     *      example="1"
+     *      example="1",
+     *      nullable=true
      * )
      *
      * @var integer

@@ -92,6 +92,13 @@ class AssessmentController extends Controller
      *     tags={"Assessments"},
      *     security={{"sanctum":{}}},
      *     summary="Adds a new assessment",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/AssessmentStoreRequest")
+     *             
+     *         )
+     *     ),
      *     @OA\Parameter(
      *         name="vulnerability_id",
      *         in="query",
@@ -99,27 +106,7 @@ class AssessmentController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer", default=10)
      *     ),
-     *     @OA\Parameter(
-     *         name="asset_id",
-     *         in="query",
-     *         description="Asset id",
-     *         required=false,
-     *         @OA\Schema(type="integer", default=1)
-     *     ),
-     *     @OA\Parameter(
-     *         name="system_group_id",
-     *         in="query",
-     *         description="System group id",
-     *         required=false,
-     *         @OA\Schema(type="integer", default=10)
-     *     ),
-     *     @OA\Parameter(
-     *         name="company_id",
-     *         in="query",
-     *         description="Company id",
-     *         required=false,
-     *         @OA\Schema(type="integer", default=10)
-     *     ),
+
      *     @OA\Response(
      *         response=200,
      *         description="OK",
@@ -128,7 +115,7 @@ class AssessmentController extends Controller
      * )
      */
 
-     public function storeAssessmentVulnerability(Request $request)
+     public function storeAssessmentVulnerability(AssessmentStoreRequest $request)
      {
          // Validierung der Anforderung
          $validator = Validator::make($request->all(), [
@@ -149,8 +136,8 @@ class AssessmentController extends Controller
  
          // Assessment erstellen und speichern
          $assessment = new Assessment();
-         $assessment->name = "APPROVE";
-         $assessment->lifecycle_status = AssessmentLifecycleStatus::CLOSED;
+         $assessment->name = $request->name;
+         $assessment->lifecycle_status = $request->lifecycle_status;
          $assessment->vulnerability_id = $request->input('vulnerability_id');
          $assessment->asset_id = $request->input('asset_id');
          $assessment->company_id = $request->input('company_id');
