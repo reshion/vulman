@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('vulnerabilities/base-severity/system-group/{systemGroupId}', [VulnerabilityController::class, 'getBaseSeverityBySystemGroup']);
     Route::get('vulnerabilities/base-severity/asset/{assetId}', [VulnerabilityController::class, 'getBaseSeverityByAsset']);
     Route::get('vulnerabilities/asset/{assetId}', [VulnerabilityController::class, 'getVulnerabilitiesByAsset']);
+    Route::get('vulnerabilities/system-group/{systemGroupId}', [VulnerabilityController::class, 'getVulnerabilitiesBySystemGroup']);
     Route::get('vulnerabilities/company', [VulnerabilityController::class, 'getByCompany']);
     Route::get('vulnerabilities/company/asset-count/', [VulnerabilityController::class, 'getByCompanyWithAssetCount']);
     // System Group Routes
