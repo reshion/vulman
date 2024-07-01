@@ -54,7 +54,10 @@ class AssetController extends Controller
         $assets = Asset::whereHas('system_groups',  function ($query) use ($request) {
             $query->where('system_groups.company_id', '=', $request->user()->company_id);
         });
+        // $assets = $assets->where();
+       
         $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request) {
+           
         });
 
         $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request) {
@@ -124,7 +127,7 @@ class AssetController extends Controller
      */
     public function show(Asset $asset)
     {
-        return new AssetResource($asset->load('vulnerabilities'));
+        return new AssetResource($asset);
     }
 
 

@@ -1582,6 +1582,64 @@
                 ]
             }
         },
+        "/api/vulnerabilities/asset/{assetId}": {
+            "get": {
+                "tags": [
+                    "Vulnerabilities"
+                ],
+                "summary": "Vulnerabilities by asset",
+                "description": "Get vulnerabilities by asset",
+                "operationId": "getVulnerabilitiesByAsset",
+                "parameters": [
+                    {
+                        "name": "assetId",
+                        "in": "path",
+                        "description": "Asset id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VulnerabilityPagingResource"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/vulnerabilities/company/asset-count/": {
             "get": {
                 "tags": [
