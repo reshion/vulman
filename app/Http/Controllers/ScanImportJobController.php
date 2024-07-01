@@ -39,7 +39,8 @@ class ScanImportJobController extends Controller
     public function index(Request $request)
     {
         $count = $request->input('count', 10);
-        $scanImportJobs = ScanImportJob::orderBy('created_at', 'DESC')->paginate($count);
+        $companyId = $request->user()->company_id;
+        $scanImportJobs = ScanImportJob::where('company_id', $companyId)->orderBy('created_at', 'DESC')->paginate($count);
         return ScanImportJobResource::collection($scanImportJobs);
     }
 
