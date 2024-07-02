@@ -24,6 +24,8 @@ class Assessment extends Model
         'risk_response_name',
         'risk_response_lifecycle_status',
         'risk_response_created',
+
+        'company_ref_id',
     ];
 
     
@@ -45,6 +47,11 @@ class Assessment extends Model
     public function asset(): BelongsTo
     {
         return $this->belongsTo(Asset::class);
+    }
+
+    public function company_ref(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
         
     protected function lifecycle_status(): Attribute

@@ -82,6 +82,8 @@ class AssessmentController extends Controller
     public function store(AssessmentStoreRequest $request)
     {
         $assessment = Assessment::create($request->all());
+        $assessment->company_ref_id = $request->user()->company_id;
+        $assessment->save();
         return new AssessmentResource($assessment);
     }
 
@@ -117,6 +119,7 @@ class AssessmentController extends Controller
 
      public function storeAssessmentVulnerability(AssessmentStoreRequest $request)
      {
+        $companyId = $request->user()->company_id;
          // Validierung der Anforderung
          $validator = Validator::make($request->all(), [
              'vulnerability_id' => 'required|integer',
@@ -136,11 +139,12 @@ class AssessmentController extends Controller
  
          // Assessment erstellen und speichern
          $assessment = new Assessment();
+         $assessment->company_ref_id = $companyId; // This is the company id of the user
          $assessment->name = $request->name;
          $assessment->lifecycle_status = $request->lifecycle_status;
          $assessment->vulnerability_id = $request->input('vulnerability_id');
          $assessment->asset_id = $request->input('asset_id');
-         $assessment->company_id = $request->input('company_id');
+         $assessment->company_id = $request->input('company_id'); // This is the company id of the assessment
          $assessment->system_group_id = $request->input('system_group_id');
          $assessment->save();
  
@@ -222,12 +226,15 @@ class AssessmentController extends Controller
     {
         Log::info('find method called');
         
+        $companyRefId = $request->user()->company_id;
+
         $vulnerabilityId = $request->input('vulnerability_id');
         $assetId = $request->input('asset_id');
         $systemGroupId = $request->input('system_group_id');
         $companyId = $request->input('company_id');
     
         $assessments = Assessment::where('vulnerability_id', $vulnerabilityId)
+            ->where('company_ref_id', $companyRefId)
             ->when($assetId, function ($query, $assetId) {
                 return $query->where('asset_id', $assetId);
             })
