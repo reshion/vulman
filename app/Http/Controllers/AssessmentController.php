@@ -136,9 +136,17 @@ class AssessmentController extends Controller
          if (!$request->hasAny(['asset_id', 'company_id', 'system_group_id'])) {
              return response()->json(['error' => 'Either asset_id, company_id, or system_group_id must be provided.'], 422);
          }
- 
-         // Assessment erstellen und speichern
-         $assessment = new Assessment();
+
+         // Check if assessment already exists
+        $assessment = Assessment::where('vulnerability_id', $request->input('vulnerability_id'))
+            ->where('company_ref_id', $companyId)               
+            ->first();
+            
+        if (!$assessment) {
+            // Create new assessment if it does not exist
+            $assessment = new Assessment();
+        }
+        
          $assessment->company_ref_id = $companyId; // This is the company id of the user
          $assessment->name = $request->name;
          $assessment->lifecycle_status = $request->lifecycle_status;
