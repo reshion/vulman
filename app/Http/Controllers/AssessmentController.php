@@ -53,7 +53,8 @@ class AssessmentController extends Controller
     public function index(Request $request)
     {
         $count = $request->input('count', 10);
-        $assessments = Assessment::paginate($count);
+        $companyId = $request->user()->company_id;
+        $assessments = Assessment::where('company_ref_id', $companyId)->paginate($count);
         return AssessmentResource::collection($assessments);
     }
 
