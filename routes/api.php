@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('companies', CompanyController::class);
     // Asset Routes
     Route::apiResource('assets', AssetController::class);
+    Route::get('assets/vulnerability/{vulnerabilityId}', [AssetController::class, 'getAssetsByVulnerabilityId']);
+    
     // Assessment Routes
     Route::apiResource('assessments', AssessmentController::class);
     Route::post('/assessments/find', [AssessmentController::class, 'find']);

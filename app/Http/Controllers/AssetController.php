@@ -50,14 +50,8 @@ class AssetController extends Controller
     public function index(Request $request)
     {
         $count = $request->input('count', 10);
-        $user = $request->user();
         $assets = Asset::whereHas('system_groups',  function ($query) use ($request) {
             $query->where('system_groups.company_id', '=', $request->user()->company_id);
-        });
-        // $assets = $assets->where();
-       
-        $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request) {
-           
         });
 
         $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request) {
@@ -70,6 +64,51 @@ class AssetController extends Controller
             //->select(DB::raw("jsonb_extract_path_text(cve_details ::jsonb, 'containers','cna','metrics','0','cvssV3_1','baseSeverity') as baseSeverity"));;
         });
         $assets = $assets->paginate($count);
+        return AssetResource::collection($assets);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/assets/vulnerability/{vulnerability_id}",
+     *     operationId="getAssetsByVulnerabilityId",
+     *     summary="Lists assets by vulnerability id",
+     *     tags={"Assets"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="vulnerability_id",
+     *         in="query",
+     *         description="Vulnerability id",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/AssetPagingResource")
+     *     )
+     * )
+     */
+    public function getAssetsByVulnerabilityId(Request $request)
+    {
+        $count = $request->input('count', 10);
+        $vulnerabilityId = $request->input('vulnerability_id');
+        $assets = Asset::whereHas('vulnerabilities', function ($query) use ($vulnerabilityId) {
+            $query->where('vulnerabilities.id', '=', $vulnerabilityId);
+        })->paginate($count);
         return AssetResource::collection($assets);
     }
 
