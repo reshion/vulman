@@ -28,8 +28,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('companies', CompanyController::class);
     // Asset Routes
     Route::apiResource('assets', AssetController::class);
-    Route::get('assets/vulnerability/{vulnerabilityId}', [AssetController::class, 'getAssetsByVulnerabilityId']);
-    
+    Route::get('assets/vulnerability/{vulnerabilityId}', [AssetController::class, 'getAssetsByVulnerability']);
+    Route::get('assets/system-group/{systemGroupId}', [AssetController::class, 'getAssetsBySystemGroup']);
+
     // Assessment Routes
     Route::apiResource('assessments', AssessmentController::class);
     Route::post('/assessments/find', [AssessmentController::class, 'find']);
@@ -47,6 +48,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('vulnerabilities/company/asset-count/', [VulnerabilityController::class, 'getByCompanyWithAssetCount']);
     // System Group Routes
     Route::apiResource('system-groups', SystemGroupController::class);
+    // Remove Asset from System Group
+    Route::delete('system-groups/{id}/asset/{assetId}', [SystemGroupController::class, 'removeAsset']);
+    // Add Asset to System Group
+    Route::post('system-groups/{id}/asset/{assetId}', [SystemGroupController::class, 'addAsset']);
+    // Get unassigned assets
+    Route::get('system-groups/{id}/assets/unassigned', [SystemGroupController::class, 'getUnassignedAssets']);
+
 
 
     Route::post('/import/scan-results', [ImportController::class, 'importScanResults']);

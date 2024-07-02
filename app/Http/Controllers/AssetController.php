@@ -70,7 +70,7 @@ class AssetController extends Controller
     /**
      * @OA\Get(
      *     path="/api/assets/vulnerability/{vulnerability_id}",
-     *     operationId="getAssetsByVulnerabilityId",
+     *     operationId="getAssetsByVulnerability",
      *     summary="Lists assets by vulnerability id",
      *     tags={"Assets"},
      *     security={{"sanctum":{}}},
@@ -102,12 +102,57 @@ class AssetController extends Controller
      *     )
      * )
      */
-    public function getAssetsByVulnerabilityId(Request $request)
+    public function getAssetsByVulnerability(Request $request)
     {
         $count = $request->input('count', 10);
         $vulnerabilityId = $request->input('vulnerability_id');
         $assets = Asset::whereHas('vulnerabilities', function ($query) use ($vulnerabilityId) {
             $query->where('vulnerabilities.id', '=', $vulnerabilityId);
+        })->paginate($count);
+        return AssetResource::collection($assets);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/assets/system-group/{system_group_id}",
+     *     operationId="getAssetsBySystemGroup",
+     *     summary="Lists assets by system group id",
+     *     tags={"Assets"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="system_group_id",
+     *         in="query",
+     *         description="System group id",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/AssetPagingResource")
+     *     )
+     * )
+     */
+    public function getAssetsBySystemGroup(Request $request)
+    {
+        $count = $request->input('count', 10);
+        $systemGroupId = $request->input('system_group_id');
+        $assets = Asset::whereHas('system_groups', function ($query) use ($systemGroupId) {
+            $query->where('system_groups.id', '=', $systemGroupId);
         })->paginate($count);
         return AssetResource::collection($assets);
     }

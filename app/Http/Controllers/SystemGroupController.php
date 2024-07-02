@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Enums\SystemGroupType;
 use App\Http\Requests\SystemGroupStoreRequest;
 use App\Http\Requests\SystemGroupUpdateRequest;
+use App\Http\Resources\AssetResource;
 use App\Http\Resources\SystemGroupResource;
+use App\Models\Asset;
 use App\Models\SystemGroup;
 use Illuminate\Http\Request;
 use PHPUnit\Event\Telemetry\System;
@@ -182,4 +184,133 @@ class SystemGroupController extends Controller
         $systemGroup->delete();
         return new SystemGroupResource($systemGroup);
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/system-groups/{id}/asset/{assetId}",
+     *     tags={"SystemGroups"},
+     *     operationId="removeAsset",
+     *     security={{"sanctum":{}}},
+     *     summary="Add an asset to a system group",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="System group id",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="assetId",
+     *         in="path",
+     *         description="Asset id",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/SystemGroupResource")
+     *     )
+     * )
+     */
+    public function removeAsset(Request $request)
+    {
+        $systemGroup = SystemGroup::findOrFail($request->id);
+        $assetId = $request->assetId;
+        if($systemGroup->type === SystemGroupType::DEFAULT)
+        {
+            return response()->json(['message' => 'Cannot remove asset from system group'], 400);
+        }
+        $systemGroup->assets()->detach($assetId);
+        return new SystemGroupResource($systemGroup);
+    }
+
+    /**
+     * @OA\Post(
+     *    path="/api/system-groups/{id}/asset/{assetId}",
+     *    tags={"SystemGroups"},
+     *    operationId="addAsset",
+     *    security={{"sanctum":{}}},
+     *    summary="Add an asset to a system group",
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="System group id",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Parameter(
+     *        name="assetId",
+     *        in="path",
+     *        description="Asset id",
+     *        required=true,
+     *        @OA\Schema(type="integer")
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="OK",
+     *        @OA\JsonContent(ref="#/components/schemas/SystemGroupResource")
+     *    )
+     * )
+     * 
+     */
+    public function addAsset(Request $request)
+    {
+        $systemGroup = SystemGroup::findOrFail($request->id);
+        $assetId = $request->assetId;
+        // Check if asset is already in system group
+        if($systemGroup->assets()->where('asset_id', $assetId)->exists())
+        {
+            return response()->json(['message' => 'Asset already in system group'], 400);
+        }
+        $systemGroup->assets()->attach($assetId);
+        return new SystemGroupResource($systemGroup);
+    }
+
+    // Get all assets with paging that are not in the system group
+    /**
+     * @OA\Get(
+     *     path="/api/system-groups/{id}/assets/unassigned",
+     *     tags={"SystemGroups"},
+     *     operationId="getUnassignedAssets",
+     *     security={{"sanctum":{}}},
+     *     summary="Get all assets that are not in the system group",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="System group id",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/AssetPagingResource")
+     *     )
+     * )
+     */
+    public function getUnassignedAssets(Request $request)
+    {
+        $count = $request->input('count', 10);
+        $systemGroup = SystemGroup::findOrFail($request->id);
+        $assets = Asset::whereDoesntHave('system_groups', function ($query) use ($systemGroup) {
+            $query->where('system_group_id', $systemGroup->id);
+        })->paginate($count);
+        return AssetResource::collection($assets);
+    }
+
 }
