@@ -6,6 +6,7 @@ use App\Http\Requests\AssetStoreRequest;
 use App\Http\Requests\AssetUpdateRequest;
 use App\Http\Resources\AssetResource;
 use App\Models\Asset;
+use App\Models\ScanImportJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use OpenApi\Annotations as OA;
@@ -49,20 +50,29 @@ class AssetController extends Controller
      */
     public function index(Request $request)
     {
+        $user = $request->user();
+        $companyId = $user->company_id;
         $count = $request->input('count', 10);
+        $lastScanImportJob = ScanImportJob::where('company_id', $companyId)->orderBy('created_at', 'desc')->first();
+
         $assets = Asset::whereHas('system_groups',  function ($query) use ($request) {
             $query->where('system_groups.company_id', '=', $request->user()->company_id);
         });
+        $assets = $assets->whereHas('vulnerabilities', function ($query) use ($request, $lastScanImportJob) {
+            $query->where('scan_import_job_id', $lastScanImportJob->id);
+        });
 
-        $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request) {
+        $sql = $assets->toSql();
 
-            return $query
+        $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request, $lastScanImportJob) {
+             $query
                 ->whereJsonContains('cve_details->containers->cna->metrics', [['cvssV3_1' => ['baseSeverity' => 'CRITICAL']]])
                 ->orWhereJsonContains('cve_details->containers->cna->metrics', [['cvssV3_1' => ['baseSeverity' => 'HIGH']]])
                 ->orWhereJsonContains('cve_details->containers->cna->metrics', [['cvssV3_1' => ['baseSeverity' => 'MEDIUM']]])
                 ->orWhereJsonContains('cve_details->containers->cna->metrics', [['cvssV3_1' => ['baseSeverity' => 'LOW']]]);
             //->select(DB::raw("jsonb_extract_path_text(cve_details ::jsonb, 'containers','cna','metrics','0','cvssV3_1','baseSeverity') as baseSeverity"));;
         });
+       
         $assets = $assets->paginate($count);
         return AssetResource::collection($assets);
     }
