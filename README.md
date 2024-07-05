@@ -44,6 +44,18 @@ alias sail='bash vendor/bin/sail'
 sail up
 ```
 
+-   Run the laravel backend in the background
+
+```console
+sail up -d
+```
+
+-   Run the laravel queue worker
+
+```console
+sail artisan queue:work
+```
+
 -   Open Swagger UI
 
 ```console
