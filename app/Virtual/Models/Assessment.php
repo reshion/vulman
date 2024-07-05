@@ -128,5 +128,18 @@ class Assessment extends NamedBaseModel
      */
 
     private $system_group;
+
+    /**
+     * @OA\Property(
+     *      title="Risk Response name",
+     *      description="Risk Response name of the Assessment",
+     *      format="string",
+     *      example="Approve"
+     * )
+     *
+     * @var string
+     */
+    private $risk_response_name;
+   
 }
 

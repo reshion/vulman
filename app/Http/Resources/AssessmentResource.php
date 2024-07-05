@@ -23,6 +23,8 @@ class AssessmentResource extends JsonResource
             'system_group_id' => $this->system_group_id,
             'asset_id' => $this->asset_id,
             'lifecycle_status' => $this->lifecycle_status,
+            'risk_response_name' => $this->risk_response_name,
+            'risk_response_lifecycle_status' => $this->risk_response_lifecycle_status,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

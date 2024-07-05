@@ -151,6 +151,8 @@ class AssessmentController extends Controller
          $assessment->company_ref_id = $companyId; // This is the company id of the user
          $assessment->name = $request->name;
          $assessment->lifecycle_status = $request->lifecycle_status;
+         $assessment->risk_response_name = $request->risk_response_name;
+         $assessment->risk_response_lifecycle_status = $request->risk_response_lifecycle_status;
          $assessment->vulnerability_id = $request->input('vulnerability_id');
          $assessment->asset_id = $request->input('asset_id');
          $assessment->company_id = $request->input('company_id'); // This is the company id of the assessment
@@ -196,32 +198,18 @@ class AssessmentController extends Controller
      *     summary="Find assessments by vulnerability id, asset id, system group id, company id",
      *     tags={"Assessments"},
      *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/AssessmentFindRequest")
+     *             
+     *         )
+     *     ),
      *     @OA\Parameter(
      *         name="vulnerability_id",
      *         in="query",
      *         description="Vulnerability id",
      *         required=true,
-     *         @OA\Schema(type="integer", default=10)
-     *     ),
-     *     @OA\Parameter(
-     *         name="asset_id",
-     *         in="query",
-     *         description="Asset id",
-     *         required=false,
-     *         @OA\Schema(type="integer", default=1)
-     *     ),
-     *     @OA\Parameter(
-     *         name="system_group_id",
-     *         in="query",
-     *         description="System group id",
-     *         required=false,
-     *         @OA\Schema(type="integer", default=10)
-     *     ),
-     *     @OA\Parameter(
-     *         name="company_id",
-     *         in="query",
-     *         description="Company id",
-     *         required=false,
      *         @OA\Schema(type="integer", default=10)
      *     ),
      *     @OA\Response(
@@ -242,7 +230,7 @@ class AssessmentController extends Controller
         $systemGroupId = $request->input('system_group_id');
         $companyId = $request->input('company_id');
     
-        $assessments = Assessment::where('vulnerability_id', $vulnerabilityId)
+        $assessment = Assessment::where('vulnerability_id', $vulnerabilityId)
             ->where('company_ref_id', $companyRefId)
             ->when($assetId, function ($query, $assetId) {
                 return $query->where('asset_id', $assetId);
@@ -253,9 +241,9 @@ class AssessmentController extends Controller
             ->when($companyId, function ($query, $companyId) {
                 return $query->where('company_id', $companyId);
             })
-            ->get();
+            ->first();
     
-        return AssessmentResource::collection($assessments);
+        return new AssessmentResource($assessment);
     }
 
 

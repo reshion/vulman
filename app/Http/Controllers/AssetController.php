@@ -28,6 +28,13 @@ class AssetController extends Controller
      *     tags={"Assets"},
      *     security={{"sanctum":{}}},
      *     @OA\Parameter(
+     *         name="scan_import_job_id",
+     *         in="query",
+     *         description="Scan import job id",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         description="Page number",
@@ -53,7 +60,14 @@ class AssetController extends Controller
         $user = $request->user();
         $companyId = $user->company_id;
         $count = $request->input('count', 10);
-        $lastScanImportJob = ScanImportJob::where('company_id', $companyId)->orderBy('created_at', 'desc')->first();
+
+        $scanImportJobId = $request->input('scan_import_job_id');
+        // Load by id if exists else load last scan import job
+        if ($scanImportJobId) {
+            $lastScanImportJob = ScanImportJob::where('id', $scanImportJobId)->first();
+        } else {
+            $lastScanImportJob = ScanImportJob::where('company_id', $companyId)->orderBy('created_at', 'desc')->first();
+        }
 
         $assets = Asset::whereHas('system_groups',  function ($query) use ($request) {
             $query->where('system_groups.company_id', '=', $request->user()->company_id);
@@ -64,7 +78,7 @@ class AssetController extends Controller
 
         $sql = $assets->toSql();
 
-        $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request, $lastScanImportJob) {
+        $assets =  $assets->whereHas('vulnerabilities', function ($query) use ($request) {
              $query
                 ->whereJsonContains('cve_details->containers->cna->metrics', [['cvssV3_1' => ['baseSeverity' => 'CRITICAL']]])
                 ->orWhereJsonContains('cve_details->containers->cna->metrics', [['cvssV3_1' => ['baseSeverity' => 'HIGH']]])
