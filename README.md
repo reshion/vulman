@@ -12,7 +12,8 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 pg_restore --dbname=vuldb --username=postgres --password --verbose  init-backup.sql
 ```
 
-- Xdebug launch setup
+-   Xdebug launch setup
+
 ```console
 {
     "version": "0.2.0",
@@ -31,3 +32,38 @@ pg_restore --dbname=vuldb --username=postgres --password --verbose  init-backup.
 }
 ```
 
+-   Create alias for sail - Open .bashrc and add following line
+
+```console
+alias sail='bash vendor/bin/sail'
+```
+
+-   Run Laravel Backend
+
+```console
+sail up
+```
+
+-   Open Swagger UI
+
+```console
+http://localhost/api/documentation
+```
+
+-   Show all routes from cmd
+
+```console
+sail artisan route:list
+```
+
+-   Regenerate Swagger Docs after changes in code
+
+```console
+sail artisan l5-swagger:generate
+```
+
+-   Get API documentation in JSON format
+
+```console
+http://localhost/api/documentation/json
+```
