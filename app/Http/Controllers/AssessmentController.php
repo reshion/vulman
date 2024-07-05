@@ -151,7 +151,7 @@ class AssessmentController extends Controller
          $assessment->company_ref_id = $companyId; // This is the company id of the user
          $assessment->name = $request->name;
          $assessment->lifecycle_status = $request->lifecycle_status;
-         $assessment->risk_response_name = $request->risk_response_name;
+         $assessment->risk_response_name = !$request->risk_response_name ? '' : $request->risk_response_name;
          $assessment->risk_response_lifecycle_status = $request->risk_response_lifecycle_status;
          $assessment->vulnerability_id = $request->input('vulnerability_id');
          $assessment->asset_id = $request->input('asset_id');

@@ -44,8 +44,10 @@ class AssessmentStoreRequest extends FormRequest
                 new OneOfThreeAssessmentRequired('asset_id', 'system_group_id', 'company_id')
             ],
             'lifecycle_status' => [Rule::enum(AssessmentLifecycleStatus::class)],
-            'risk_response_name' => 'string|max:255',
-            'risk_response_lifecycle_status' => [Rule::enum(RiskResponseLifecycleStatus::class)],
+            'risk_response_name' => 'nullable|string|max:255',
+            'risk_response_lifecycle_status' => [
+                'nullable',
+                Rule::enum(RiskResponseLifecycleStatus::class)],
         ];
     }
 }
