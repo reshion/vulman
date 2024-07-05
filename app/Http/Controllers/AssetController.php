@@ -92,6 +92,49 @@ class AssetController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/api/assets/list-all",
+     *     operationId="listAllAssets",
+     *     summary="Lists all assets",
+     *     tags={"Assets"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="count",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer", default=10)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(ref="#/components/schemas/AssetPagingResource")
+     *     )
+     * )
+     */
+    public function listAll(Request $request)
+    {
+        $count = $request->input('count', 10);
+
+        $assets = Asset::whereHas('system_groups',  function ($query) use ($request) {
+            $query->where('system_groups.company_id', '=', $request->user()->company_id);
+        });
+
+
+        $assets = $assets->paginate($count);       
+        return AssetResource::collection($assets);
+    }
+
+    public function
+
+    /**
      * @OA\Get(
      *     path="/api/assets/vulnerability/{vulnerability_id}",
      *     operationId="getAssetsByVulnerability",
