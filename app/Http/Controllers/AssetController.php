@@ -132,7 +132,6 @@ class AssetController extends Controller
         return AssetResource::collection($assets);
     }
 
-    public function
 
     /**
      * @OA\Get(
