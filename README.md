@@ -1,3 +1,9 @@
+## Pre-requisites
+
+-   [Install Docker and Docker Compose](https://docs.docker.com/compose/install/)
+-   If you are on windows, install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install)
+-   Make sure WSL2 is running and set as default
+
 ## About Laravel
 
 -   Install all dependencies and libraries after cloning. Check php83 image version.
