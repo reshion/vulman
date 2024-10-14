@@ -85,3 +85,16 @@ sail artisan l5-swagger:generate
 ```console
 http://localhost/api/documentation/json
 ```
+
+-   Create a new migration
+
+```console
+sail artisan make:migration create_users_table
+```
+
+The will create a new migration file in the database/migrations folder.
+Edit the migration file and run the migration
+
+```console
+sail artisan migrate
+```

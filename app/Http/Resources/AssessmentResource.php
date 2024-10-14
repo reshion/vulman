@@ -16,12 +16,13 @@ class AssessmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'note' => $this->note,
             'created' => $this->created,
             'vulnerability_id' => $this->vulnerability_id,
             'company_id' => $this->company_id,
             'system_group_id' => $this->system_group_id,
             'asset_id' => $this->asset_id,
+            'treatment' => $this->treatment,
             'lifecycle_status' => $this->lifecycle_status,
             'risk_response_name' => $this->risk_response_name,
             'risk_response_lifecycle_status' => $this->risk_response_lifecycle_status,

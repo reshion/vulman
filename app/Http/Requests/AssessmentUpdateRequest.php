@@ -24,7 +24,7 @@ class AssessmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:255',
+            'note' => 'sometimes|string|max:255',
             'vulnerability_id' => 'required|exists:vulnerabilities,id',
             'company_id' => 'required|exists:companies,id',
             'system_group_id' => 'required|exists:system_groups,id',

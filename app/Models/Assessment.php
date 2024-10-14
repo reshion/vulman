@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AssessmentLifecycleStatus;
+use App\Enums\AssessmentTreatment;
 use App\Enums\RiskResponseLifecycleStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ class Assessment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'note',
         'lifecycle_status',
 
         'vulnerability_id',
@@ -26,6 +27,7 @@ class Assessment extends Model
         'risk_response_created',
 
         'company_ref_id',
+        'treatment',
     ];
 
     
@@ -52,6 +54,14 @@ class Assessment extends Model
     public function company_ref(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    protected function treatment(): Attribute 
+    {
+        return Attribute::make(
+            get: fn ($value) => AssessmentTreatment::from($value),
+            set: fn ($value) => is_string($value) ? AssessmentTreatment::from($value)->value : $value->value,
+        );
     }
         
     protected function lifecycle_status(): Attribute

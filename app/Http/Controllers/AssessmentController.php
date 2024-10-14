@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AssessmentLifecycleStatus;
 use App\Http\Requests\AssessmentStoreRequest;
 use App\Http\Requests\AssessmentUpdateRequest;
 use App\Http\Resources\AssessmentResource;
@@ -11,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use OpenApi\Annotations as OA;
-use Termwind\Components\Li;
 
 /** 
  * @OAS\SecurityScheme(      
@@ -120,7 +118,7 @@ class AssessmentController extends Controller
 
      public function storeAssessmentVulnerability(AssessmentStoreRequest $request)
      {
-        $companyId = $request->user()->company_id;
+            $companyId = $request->user()->company_id;
          // Validierung der Anforderung
          $validator = Validator::make($request->all(), [
              'vulnerability_id' => 'required|integer',
@@ -149,10 +147,13 @@ class AssessmentController extends Controller
         }
         
          $assessment->company_ref_id = $companyId; // This is the company id of the user
-         $assessment->name = $request->name;
+         $assessment->note = $request->note;
          $assessment->lifecycle_status = $request->lifecycle_status;
-         $assessment->risk_response_name = !$request->risk_response_name ? '' : $request->risk_response_name;
+         $assessment->treatment = $request->treatment;
+
+         $assessment->risk_response_name = $request->risk_response_name;
          $assessment->risk_response_lifecycle_status = $request->risk_response_lifecycle_status;
+         
          $assessment->vulnerability_id = $request->input('vulnerability_id');
          $assessment->asset_id = $request->input('asset_id');
          $assessment->company_id = $request->input('company_id'); // This is the company id of the assessment
@@ -242,6 +243,12 @@ class AssessmentController extends Controller
                 return $query->where('company_id', $companyId);
             })
             ->first();
+
+        if (!$assessment) {
+            return response()->json([
+                'message' => 'Assessment not found'
+            ], 404);
+        }
     
         return new AssessmentResource($assessment);
     }

@@ -4,6 +4,7 @@ namespace App\Virtual\Models;
 
 use App\Enums\AssessmentLifecycleStatus;
 use App\Enums\RiskResponseLifecycleStatus;
+use App\Enums\AssessmentTreatment;
 use OpenApi\Annotations as OA;
 
 /**
@@ -12,8 +13,18 @@ use OpenApi\Annotations as OA;
  *     description="Assessment model",
  * )
  */
-class Assessment extends NamedBaseModel
+class Assessment extends BaseModel
 {
+    /**
+     * @OA\Property(
+     *      title="Note",
+     *      description="Some notes of the Assessment",
+     *      example="This is a note"
+     * )
+     *
+     * @var string
+     */
+    private $note;
 
     /**
      * @OA\Property(
@@ -36,6 +47,11 @@ class Assessment extends NamedBaseModel
      * @OA\Property()
      */
     private RiskResponseLifecycleStatus $risk_response_lifecycle_status;
+
+    /**
+     * @OA\Property()
+     */
+    private AssessmentTreatment $treatment;
 
 
     /**

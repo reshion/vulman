@@ -3,6 +3,7 @@
 namespace App\Virtual\Requests;
 
 use App\Enums\AssessmentLifecycleStatus;
+use App\Enums\AssessmentTreatment;
 use App\Enums\RiskResponseLifecycleStatus;
 use OpenApi\Annotations as OA;
 use OpenApi\Attributes as OAT;
@@ -17,18 +18,21 @@ class AssessmentStoreRequest
 {
     /**
      * @OA\Property(
-     *      title="name",
-     *      description="Name of the new Assessment",
-     *      example="Approve"
+     *      title="Note",
+     *      description="Note of the Assessment",
+     *      example="This is a note"
      * )
      *
      * @var string
      */
-    public $name;
+    public $note;
     
 
     #[OAT\Property()]
     public AssessmentLifecycleStatus $lifecycle_status;
+
+    #[OAT\Property()]
+    public AssessmentTreatment $treatment;
 
      /**
      * @OA\Property(

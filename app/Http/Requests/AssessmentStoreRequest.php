@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\AssessmentLifecycleStatus;
+use App\Enums\AssessmentTreatment;
 use App\Enums\RiskResponseLifecycleStatus;
 use App\Rules\OneOfThreeAssessmentRequired;
 use Illuminate\Foundation\Http\FormRequest;
@@ -26,7 +27,7 @@ class AssessmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255',            
+            'note' => 'string|max:255',            
             'vulnerability_id' => 'required:vulnerabilities,id',
             'company_id' => [
                 'nullable',
@@ -43,8 +44,16 @@ class AssessmentStoreRequest extends FormRequest
                 'exists:assets,id',
                 new OneOfThreeAssessmentRequired('asset_id', 'system_group_id', 'company_id')
             ],
-            'lifecycle_status' => [Rule::enum(AssessmentLifecycleStatus::class)],
+            'treatment' => [
+                'nullable',
+                Rule::enum(AssessmentTreatment::class)],
+
+            'lifecycle_status' => [
+                'nullable',
+                Rule::enum(AssessmentLifecycleStatus::class)],
+
             'risk_response_name' => 'nullable|string|max:255',
+            
             'risk_response_lifecycle_status' => [
                 'nullable',
                 Rule::enum(RiskResponseLifecycleStatus::class)],
