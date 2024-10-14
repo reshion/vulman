@@ -72,6 +72,7 @@ class AssessmentStoreRequest
 
     public $asset_id;
 
+
     /**
      * @OA\Property(
      *      title="risk_response_name",
