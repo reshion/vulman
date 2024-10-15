@@ -151,7 +151,7 @@ class AssessmentController extends Controller
          $assessment->lifecycle_status = $request->lifecycle_status;
          $assessment->treatment = $request->treatment;
 
-         $assessment->risk_response_name = $request->risk_response_name;
+         $assessment->risk_response = $request->risk_response;
          $assessment->risk_response_lifecycle_status = $request->risk_response_lifecycle_status;
          
          $assessment->vulnerability_id = $request->input('vulnerability_id');

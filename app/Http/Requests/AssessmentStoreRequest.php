@@ -52,7 +52,7 @@ class AssessmentStoreRequest extends FormRequest
                 'nullable',
                 Rule::enum(AssessmentLifecycleStatus::class)],
 
-            'risk_response_name' => 'nullable|string|max:255',
+            'risk_response' => 'nullable|string|max:255',
             
             'risk_response_lifecycle_status' => [
                 'nullable',

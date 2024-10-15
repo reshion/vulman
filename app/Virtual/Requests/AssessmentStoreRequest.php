@@ -75,14 +75,14 @@ class AssessmentStoreRequest
 
     /**
      * @OA\Property(
-     *      title="risk_response_name",
-     *      description="Risk Response name of the Assessment",
+     *      title="risk_response",
+     *      description="Risk Response of the Assessment",
      *      example="Approve"
      * )
      *
      * @var string
      */
-    public $risk_response_name;
+    public $risk_response;
 
     #[OAT\Property()]
     public RiskResponseLifecycleStatus $risk_response_lifecycle_status;

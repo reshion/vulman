@@ -22,7 +22,7 @@ class Assessment extends Model
         'system_group_id',
         'asset_id',
 
-        'risk_response_name',
+        'risk_response',
         'risk_response_lifecycle_status',
         'risk_response_created',
 

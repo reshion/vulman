@@ -24,7 +24,7 @@ class AssessmentResource extends JsonResource
             'asset_id' => $this->asset_id,
             'treatment' => $this->treatment,
             'lifecycle_status' => $this->lifecycle_status,
-            'risk_response_name' => $this->risk_response_name,
+            'risk_response' => $this->risk_response,
             'risk_response_lifecycle_status' => $this->risk_response_lifecycle_status,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
