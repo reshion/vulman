@@ -118,27 +118,41 @@ class AssessmentController extends Controller
 
      public function storeAssessmentVulnerability(AssessmentStoreRequest $request)
      {
-            $companyId = $request->user()->company_id;
-         // Validierung der Anforderung
-         $validator = Validator::make($request->all(), [
-             'vulnerability_id' => 'required|integer',
-             'asset_id' => 'nullable|integer',
-             'company_id' => 'nullable|integer',
-             'system_group_id' => 'nullable|integer',
-         ]);
+        $companyRefId = $request->user()->company_id;
+        // Validierung der Anforderung
+        $validator = Validator::make($request->all(), [
+            'vulnerability_id' => 'required|integer',
+            'asset_id' => 'nullable|integer',
+            'company_id' => 'nullable|integer',
+            'system_group_id' => 'nullable|integer',
+        ]);
  
-         if ($validator->fails()) {
-             return response()->json(['errors' => $validator->errors()], 422);
-         }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
  
          // Sicherstellen, dass einer der optionalen Fremdschlüssel übermittelt wird
-         if (!$request->hasAny(['asset_id', 'company_id', 'system_group_id'])) {
-             return response()->json(['error' => 'Either asset_id, company_id, or system_group_id must be provided.'], 422);
-         }
+        if (!$request->hasAny(['asset_id', 'company_id', 'system_group_id'])) {
+            return response()->json(['error' => 'Either asset_id, company_id, or system_group_id must be provided.'], 422);
+        }
 
-         // Check if assessment already exists
-        $assessment = Assessment::where('vulnerability_id', $request->input('vulnerability_id'))
-            ->where('company_ref_id', $companyId)               
+        $vulnerabilityId = $request->input('vulnerability_id');
+        $assetId = $request->input('asset_id');
+        $systemGroupId = $request->input('system_group_id');
+        $companyId = $request->input('company_id');
+
+        // Check if assessment already exists
+        $assessment = Assessment::where('vulnerability_id', $vulnerabilityId)
+            ->where('company_ref_id', $companyRefId)
+            ->when($assetId, function ($query, $assetId) {
+                return $query->where('asset_id', $assetId);
+            })
+            ->when($systemGroupId, function ($query, $systemGroupId) {
+                return $query->where('system_group_id', $systemGroupId);
+            })
+            ->when($companyId, function ($query, $companyId) {
+                return $query->where('company_id', $companyId);
+            })               
             ->first();
             
         if (!$assessment) {
@@ -146,7 +160,7 @@ class AssessmentController extends Controller
             $assessment = new Assessment();
         }
         
-         $assessment->company_ref_id = $companyId; // This is the company id of the user
+         $assessment->company_ref_id = $companyRefId; // This is the company id of the user
          $assessment->note = $request->note;
          $assessment->lifecycle_status = $request->lifecycle_status;
          $assessment->treatment = $request->treatment;
