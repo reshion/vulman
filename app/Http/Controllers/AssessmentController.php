@@ -230,7 +230,7 @@ class AssessmentController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(ref="#/components/schemas/AssessmentResource")
+     *         @OA\JsonContent(ref="#/components/schemas/AssessmentsResource")
      *     )
      * )
      */
@@ -245,7 +245,7 @@ class AssessmentController extends Controller
         $systemGroupId = $request->input('system_group_id');
         $companyId = $request->input('company_id');
     
-        $assessment = Assessment::where('vulnerability_id', $vulnerabilityId)
+        $assessments = Assessment::where('vulnerability_id', $vulnerabilityId)
             ->where('company_ref_id', $companyRefId)
             ->when($assetId, function ($query, $assetId) {
                 return $query->where('asset_id', $assetId);
@@ -255,16 +255,16 @@ class AssessmentController extends Controller
             })
             ->when($companyId, function ($query, $companyId) {
                 return $query->where('company_id', $companyId);
-            })
-            ->first();
-
-        if (!$assessment) {
+            });//->get();
+            //->first();
+            $sql = $assessments->toSql();
+        if (!$assessments) {
             return response()->json([
                 'message' => 'Assessment not found'
             ], 404);
         }
     
-        return new AssessmentResource($assessment);
+        return AssessmentResource::collection($assessments->get());
     }
 
 

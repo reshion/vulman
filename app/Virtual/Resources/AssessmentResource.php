@@ -24,16 +24,15 @@ class AssessmentResource
     private $data;
 }
 
-
-
 /**
+ * @OA
  * @OA\Schema(
- *     schema="AssessmentPagingResource",
- *     type="object",
- *     title="AssessmentPagingResource"     
+ *   schema="AssessmentsResource",
+ *   type="object",
+ *   title="AssessmentsResource",
  * )
  */
-class AssessmentPagingResource
+class AssessmentsResource
 {
     /**
      * @OA\Property(
@@ -44,7 +43,17 @@ class AssessmentPagingResource
      * @var \App\Virtual\Models\Assessment[]
      */
     private $data;
+}
 
+/**
+ * @OA\Schema(
+ *     schema="AssessmentPagingResource",
+ *     type="object",
+ *     title="AssessmentPagingResource"     
+ * )
+ */
+class AssessmentPagingResource extends AssessmentsResource
+{
     /**
      * @OA\Property(
      *     title="Meta",
