@@ -28,7 +28,8 @@ class AssetResource extends JsonResource
             'operating_system' => $this->operating_system,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
-            'vulnerabilities' => new VulnerabilityPagingResource($this->whenLoaded('vulnerabilities'))
+            'vulnerabilities' => new VulnerabilityPagingResource($this->whenLoaded('vulnerabilities')),
+            'system_groups' => new SystemGroupPagingResource($this->whenLoaded('system_groups')),
         ];
     }
 }

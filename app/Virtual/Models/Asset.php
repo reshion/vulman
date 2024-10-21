@@ -58,4 +58,14 @@ class Asset extends BaseModel
      * @var \App\Virtual\Models\Vulnerabilities[]
      */
     private $vulnerabilities;
+
+     /**
+     * @OA\Property(
+     *     title="SystemGroups",
+     *     description="Asset System Group model"
+     * )
+     *
+     * @var \App\Virtual\Models\SystemGroup[]
+     */
+    private $system_groups;
 }
