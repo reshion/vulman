@@ -174,7 +174,9 @@ class AssetController extends Controller
         $vulnerabilityId = $request->input('vulnerability_id');
         $assets = Asset::whereHas('vulnerabilities', function ($query) use ($vulnerabilityId) {
             $query->where('vulnerabilities.id', '=', $vulnerabilityId);
-        })->paginate($count);
+        })
+        ->with('system_groups')
+        ->paginate($count);
         return AssetResource::collection($assets);
     }
 
