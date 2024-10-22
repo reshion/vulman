@@ -148,6 +148,13 @@ class AssetController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="system_group_id",
+     *         in="query",
+     *         description="System group id",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         description="Page number",
@@ -172,12 +179,24 @@ class AssetController extends Controller
     {
         $count = $request->input('count', 10);
         $vulnerabilityId = $request->input('vulnerability_id');
+        $systemGroupId = $request->input('system_group_id');
         $assets = Asset::whereHas('vulnerabilities', function ($query) use ($vulnerabilityId) {
             $query->where('vulnerabilities.id', '=', $vulnerabilityId);
+        })
+        ->when($systemGroupId, function ($query, $systemGroupId) {
+           $query->whereHas('system_groups', function ($query) use ($systemGroupId) {
+                $query->where('system_groups.id', '=', $systemGroupId);
+            });
         })
         ->with('system_groups')
         ->paginate($count);
         return AssetResource::collection($assets);
+    }
+
+    public function getAssetsByVulnerabilityAndSystemGroup(Request $request)
+    {
+        $count = $request->input('count', 10);
+        $vulnerabilityId = $request->input('vulnerability_id');
     }
 
     /**
