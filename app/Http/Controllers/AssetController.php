@@ -192,13 +192,7 @@ class AssetController extends Controller
         ->paginate($count);
         return AssetResource::collection($assets);
     }
-
-    public function getAssetsByVulnerabilityAndSystemGroup(Request $request)
-    {
-        $count = $request->input('count', 10);
-        $vulnerabilityId = $request->input('vulnerability_id');
-    }
-
+    
     /**
      * @OA\Get(
      *     path="/api/assets/system-group/{system_group_id}",
