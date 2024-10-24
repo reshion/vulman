@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Enums\AssessmentLifecycleStatus;
+use App\Enums\AssessmentTreatment;
+use App\Enums\RiskResponseLifecycleStatus;
+use App\Rules\OneOfThreeAssessmentRequired;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,13 +26,21 @@ class AssessmentUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'note' => 'sometimes|string|max:255',
-            'vulnerability_id' => 'required|exists:vulnerabilities,id',
-            'company_id' => 'required|exists:companies,id',
-            'system_group_id' => 'required|exists:system_groups,id',
-            'asset_id'  => 'required|exists:assets,id',
-            'lifecycle_status' => ['sometimes','required', Rule::enum(AssessmentLifecycleStatus::class)],
+        return [            
+            'note' => 'sometimes|string|max:255',           
+            'treatment' => [
+                'nullable',
+                Rule::enum(AssessmentTreatment::class)],
+
+            'lifecycle_status' => [
+                'nullable',
+                Rule::enum(AssessmentLifecycleStatus::class)],
+
+            'risk_response' => 'nullable|string|max:255',
+            
+            'risk_response_lifecycle_status' => [
+                'nullable',
+                Rule::enum(RiskResponseLifecycleStatus::class)],
         ];
     }
 }

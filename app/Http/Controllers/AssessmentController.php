@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AssessmentLifecycleStatus;
 use App\Http\Requests\AssessmentStoreRequest;
 use App\Http\Requests\AssessmentUpdateRequest;
 use App\Http\Resources\AssessmentResource;
@@ -140,6 +141,7 @@ class AssessmentController extends Controller
         $assetId = $request->input('asset_id');
         $systemGroupId = $request->input('system_group_id');
         $companyId = $request->input('company_id');
+       
 
         // Check if assessment already exists
         $assessment = Assessment::where('vulnerability_id', $vulnerabilityId)
@@ -152,7 +154,8 @@ class AssessmentController extends Controller
             })
             ->when($companyId, function ($query, $companyId) {
                 return $query->where('company_id', $companyId);
-            })               
+            })->where('lifecycle_status', AssessmentLifecycleStatus::OPEN)
+                        
             ->first();
             
         if (!$assessment) {
@@ -244,6 +247,8 @@ class AssessmentController extends Controller
         $assetId = $request->input('asset_id');
         $systemGroupId = $request->input('system_group_id');
         $companyId = $request->input('company_id');
+        $lifeCycleStatus = $request->input('lifecycle_status');
+        // $lifeCycleStatus = AssessmentLifecycleStatus::OPEN;
     
         $assessments = Assessment::where('vulnerability_id', $vulnerabilityId)
             ->where('company_ref_id', $companyRefId)
@@ -255,8 +260,11 @@ class AssessmentController extends Controller
             })
             ->when($companyId, function ($query, $companyId) {
                 return $query->where('company_id', $companyId);
-            });//->get();
-            //->first();
+            })
+            ->when($lifeCycleStatus, function ($query, $lifeCycleStatus) {
+                return $query->where('lifecycle_status', $lifeCycleStatus);
+            })  
+            ;
             $sql = $assessments->toSql();
         if (!$assessments) {
             return response()->json([
@@ -279,7 +287,7 @@ class AssessmentController extends Controller
      *     @OA\RequestBody(
      *         @OA\MediaType(
      *             mediaType="application/json",
-     *             @OA\Schema(ref="#/components/schemas/AssessmentStoreRequest")          
+     *             @OA\Schema(ref="#/components/schemas/AssessmentUpdateRequest")          
      *         )
      *     ),
      *      @OA\Parameter(
@@ -299,7 +307,7 @@ class AssessmentController extends Controller
      * )
      */
     public function update(AssessmentUpdateRequest $request, Assessment $assessment)
-    {
+    {   
         $assessment->update($request->validated());
         return new AssessmentResource($assessment);
     }

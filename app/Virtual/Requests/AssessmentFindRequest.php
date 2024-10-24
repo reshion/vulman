@@ -54,4 +54,10 @@ class AssessmentFindRequest
     public $asset_id;
 
 
+    /**
+     * @OA\Property()
+     */
+    private AssessmentLifecycleStatus $lifecycle_status;
+
+
 }

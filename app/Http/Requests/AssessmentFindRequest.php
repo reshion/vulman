@@ -40,7 +40,7 @@ class AssessmentFindRequest extends FormRequest
                 'nullable',
                 'exists:assets,id',
                 new OneOfThreeAssessmentRequired('asset_id', 'system_group_id', 'company_id')
-            ],
+            ],            
         ];
     }
 }
